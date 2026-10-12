@@ -20,9 +20,6 @@ pip install -r requirements.txt
 # test rapide (~1 min)
 python -m enrichsim run main --n 3 --steps 3000 --out test_rapide --no-report
 
-# les 4 expériences (main, dose, timing, ablation)
-python -m enrichsim run all --n 20 --steps 20000 --out results
-
 # expérience finale du mémoire (graine différente des pilotes ; ~1 h 15 sur 4 cœurs)
 python -m enrichsim run all --n 20 --steps 20000 --seed 2027 --out results
 
