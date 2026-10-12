@@ -476,7 +476,8 @@ def analyze_timing(df: pd.DataFrame, variables: list[str]) -> pd.DataFrame:
 def analyze_ablation(df: pd.DataFrame, variables: list[str], control: str = "EC",
                      floor: str = "IC") -> pd.DataFrame:
     """Dunnett : chaque condition comparée à EC. `pct_effect_lost` = part de l'écart EC - IC
-    perdue quand on retire la composante (0 % : sans importance ; 100 % : comme IC)."""
+    perdue quand on retire la composante (0 % : sans importance ; 100 % : comme IC).
+    Non calculé (NaN) quand EC ne diffère pas significativement de IC sur la variable."""
     groups = [g for g in dict.fromkeys(df["group"]) if g != control]
     rows = []
     for v in variables:
@@ -497,6 +498,12 @@ def analyze_ablation(df: pd.DataFrame, variables: list[str], control: str = "EC"
                 "g": hedges_g(o, ctrl),
                 "pct_effect_lost": float(100 * (ctrl.mean() - o.mean()) / full) if full else np.nan,
             })
+        # le pourcentage n'a de sens que si EC diffère réellement de IC sur cette variable
+        floor_rows = [r for r in rows if r["variable"] == v and r["group"] == floor]
+        if not floor_rows or floor_rows[0]["p"] >= ALPHA:
+            for r in rows:
+                if r["variable"] == v:
+                    r["pct_effect_lost"] = np.nan
     return pd.DataFrame(rows)
 
 

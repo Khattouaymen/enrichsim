@@ -6,3 +6,4 @@ results/
 pilot/
 test_rapide/
 *.log
+results_run.log
