@@ -152,7 +152,8 @@ def check_assumptions(samples: list[np.ndarray]) -> dict:
         else:
             shapiro.append(np.nan)
     try:
-        lev = float(stats.levene(*samples, center="median").pvalue)
+        with np.errstate(divide="ignore", invalid="ignore"):
+            lev = float(stats.levene(*samples, center="median").pvalue)
     except Exception:
         lev = np.nan
     finite = [p for p in shapiro if np.isfinite(p)]
