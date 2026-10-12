@@ -22,6 +22,30 @@ python -m enrichsim run main --n 3 --steps 3000 --out test_rapide --no-report
 
 # les 4 expériences (main, dose, timing, ablation)
 python -m enrichsim run all --n 20 --steps 20000 --out results
+
+# expérience finale du mémoire (graine différente des pilotes ; ~1 h 15 sur 4 cœurs)
+python -m enrichsim run all --n 20 --steps 20000 --seed 2027 --out results
+
+# (re)générer le rapport HTML d'une expérience
+python -m enrichsim report results/main
+
+# tableau de bord pour la soutenance
+streamlit run app/dashboard.py
+
+# tests
+python -m pytest
 ```
 
-Travail en cours : analyse statistique, rapport, tableau de bord Streamlit, tests, documentation.
+## Contenu
+
+| Élément | Rôle |
+|---|---|
+| `enrichsim/` | modèle (cerveau, environnements, tests comportementaux, expériences) |
+| `enrichsim/stats.py` | plan d'analyse statistique (fixé avant l'expérience finale) |
+| `enrichsim/report.py` | rapport HTML en français, résultats au format APA |
+| `app/dashboard.py` | tableau de bord Streamlit |
+| `docs/methodologie.md` | méthodologie, hypothèses, phase de calibrage, limites, références |
+| `tests/` | tests pytest |
+
+Chaque dossier de résultats contient `subjects.csv`, `development.csv`,
+`learning_curves.csv`, `metadata.json`, `brains/*.npz`, `stats/*.csv` et `rapport.html`.
