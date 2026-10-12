@@ -1,0 +1,55 @@
+variable,label,method,A,B,diff,p,g
+brain_n_neurons,Nombre de neurones,Mann-Whitney (Holm),IC,SC,-3.0,1.3318050876003966e-05,-1.6783172782181908
+brain_n_neurons,Nombre de neurones,Mann-Whitney (Holm),IC,EC,-16.5,1.7131137742719438e-07,-7.348120368120331
+brain_n_neurons,Nombre de neurones,Mann-Whitney (Holm),SC,EC,-13.5,1.7131137742719438e-07,-6.147939838415203
+brain_n_synapses,Nombre de synapses,Games-Howell,IC,SC,-694.5499999999997,1.1102230246251565e-15,-6.418424019238538
+brain_n_synapses,Nombre de synapses,Games-Howell,IC,EC,-4604.25,4.440892098500626e-15,-17.329885149804436
+brain_n_synapses,Nombre de synapses,Games-Howell,SC,EC,-3909.7000000000003,0.0,-14.553187469710203
+brain_fan_in_mean,Complexité dendritique (synapses / neurone),Games-Howell,IC,SC,-9.463726411341732,1.1879386363489175e-14,-7.363830096129134
+brain_fan_in_mean,Complexité dendritique (synapses / neurone),Games-Howell,IC,EC,-51.373663948299054,1.7763568394002505e-15,-19.298028898314016
+brain_fan_in_mean,Complexité dendritique (synapses / neurone),Games-Howell,SC,EC,-41.90993753695732,0.0,-15.848488172065773
+brain_synaptic_strength,Force synaptique moyenne,Mann-Whitney (Holm),IC,SC,0.0012884810566902508,0.19883449020829447,0.3331780032199568
+brain_synaptic_strength,Force synaptique moyenne,Mann-Whitney (Holm),IC,EC,0.025911383330822046,2.0386845384520075e-07,1.752331349679478
+brain_synaptic_strength,Force synaptique moyenne,Mann-Whitney (Holm),SC,EC,0.024622902274131796,4.435528660184487e-07,1.7811655105022033
+brain_coverage_objects,Territoire cortical « objets »,Games-Howell,IC,SC,-0.0009310369350244811,0.8983906902472644,-0.13686226273575613
+brain_coverage_objects,Territoire cortical « objets »,Games-Howell,IC,EC,-0.28787246545506967,0.0,-16.84078552405561
+brain_coverage_objects,Territoire cortical « objets »,Games-Howell,SC,EC,-0.28694142852004517,0.0,-16.716220728275847
+brain_dimensionality,Dimensionnalité des représentations,Tukey HSD,IC,SC,-0.27764071624171915,0.1437967597726132,-0.558611813055918
+brain_dimensionality,Dimensionnalité des représentations,Tukey HSD,IC,EC,-0.17194485661926784,0.4664160394000946,-0.3711840599654747
+brain_dimensionality,Dimensionnalité des représentations,Tukey HSD,SC,EC,0.10569585962245132,0.7474297225601987,0.23936522269322633
+brain_pattern_separation,Séparation de patterns,Mann-Whitney (Holm),IC,SC,0.00897410583936355,0.19765286149861316,0.4405010329343116
+brain_pattern_separation,Séparation de patterns,Mann-Whitney (Holm),IC,EC,-0.10904814538898702,0.0003577239304669616,-0.9303145711373324
+brain_pattern_separation,Séparation de patterns,Mann-Whitney (Holm),SC,EC,-0.11802225122835058,5.349004879531016e-06,-1.9101806093726599
+brain_object_sensitivity,Sensibilité corticale aux objets,Mann-Whitney (Holm),IC,SC,0.00014633841783505004,0.3507022236669548,0.4097701975651226
+brain_object_sensitivity,Sensibilité corticale aux objets,Mann-Whitney (Holm),IC,EC,-0.004587677518429751,3.6059383442166188e-06,-2.547595544569862
+brain_object_sensitivity,Sensibilité corticale aux objets,Mann-Whitney (Holm),SC,EC,-0.0047340159362648,2.0386845384520075e-07,-4.055796986223486
+nor_neural_di,Indice de discrimination neuronal (NOR),Mann-Whitney (Holm),IC,SC,-0.12224048934861864,0.29569316542872376,-0.44405310065565506
+nor_neural_di,Indice de discrimination neuronal (NOR),Mann-Whitney (Holm),IC,EC,-0.27109266477324423,0.06220378262154748,-0.897545412914905
+nor_neural_di,Indice de discrimination neuronal (NOR),Mann-Whitney (Holm),SC,EC,-0.1488521754246256,0.29569316542872376,-0.4208466774930295
+of_exploration,Champ ouvert : exploration,Mann-Whitney (Holm),IC,SC,-0.02083333333333326,0.7555206868432192,-0.16683711734415715
+of_exploration,Champ ouvert : exploration,Mann-Whitney (Holm),IC,EC,-0.04513888888888884,0.6984700550749614,-0.3498113379102273
+of_exploration,Champ ouvert : exploration,Mann-Whitney (Holm),SC,EC,-0.02430555555555558,0.6984700550749614,-0.18941547811833095
+of_center_time,Champ ouvert : temps au centre,Tukey HSD,IC,SC,0.05933333333333332,0.04045182096903377,0.7076734205905671
+of_center_time,Champ ouvert : temps au centre,Tukey HSD,IC,EC,0.032833333333333325,0.35751918573463526,0.4349386255751064
+of_center_time,Champ ouvert : temps au centre,Tukey HSD,SC,EC,-0.026499999999999996,0.5091016852653598,-0.377662120754817
+nor_exploration,NOR : temps d'exploration des objets,Mann-Whitney (Holm),IC,SC,-0.007499999999999993,0.5439087503278803,-0.23754818086041077
+nor_exploration,NOR : temps d'exploration des objets,Mann-Whitney (Holm),IC,EC,-0.008124999999999993,0.17331514286124394,-0.6199318090687905
+nor_exploration,NOR : temps d'exploration des objets,Mann-Whitney (Holm),SC,EC,-0.0006250000000000006,0.5439087503278803,-0.3969464122929228
+nor_di,NOR : indice de discrimination comportemental,Tukey HSD,IC,SC,0.03134485194581112,0.885727780177741,0.14362988163487422
+nor_di,NOR : indice de discrimination comportemental,Tukey HSD,IC,EC,-0.14449829548049015,0.08595921923019623,-0.7022105901367941
+nor_di,NOR : indice de discrimination comportemental,Tukey HSD,SC,EC,-0.17584314742630125,0.028691847918789093,-0.7938147534554667
+maze_errors,Hebb-Williams : erreurs par essai,Tukey HSD,IC,SC,-1.0843749999999979,0.6459416505142133,-0.25886903687418555
+maze_errors,Hebb-Williams : erreurs par essai,Tukey HSD,IC,EC,0.75,0.8105113008730238,0.19504907762000043
+maze_errors,Hebb-Williams : erreurs par essai,Tukey HSD,SC,EC,1.8343749999999979,0.2923874699974749,0.49818885534668406
+maze_trials_to_criterion,Hebb-Williams : essais jusqu'au critère,Mann-Whitney (Holm),IC,SC,-0.875,0.8513592445385695,-0.27708222828937445
+maze_trials_to_criterion,Hebb-Williams : essais jusqu'au critère,Mann-Whitney (Holm),IC,EC,-1.0,0.8513592445385695,-0.3734692817171996
+maze_trials_to_criterion,Hebb-Williams : essais jusqu'au critère,Mann-Whitney (Holm),SC,EC,-0.125,0.8812376434126739,-0.059856752857614694
+maze_latency,Hebb-Williams : latence (pas),Mann-Whitney (Holm),IC,SC,-8.40625,0.6469634918433822,-0.32662645008053653
+maze_latency,Hebb-Williams : latence (pas),Mann-Whitney (Holm),IC,EC,2.34375,0.8181494613881999,0.005136275712063341
+maze_latency,Hebb-Williams : latence (pas),Mann-Whitney (Holm),SC,EC,10.75,0.6400985744434956,0.35835887741022265
+reversal_errors,Inversion : erreurs par essai,Tukey HSD,IC,SC,2.200000000000003,0.710317512641563,0.22260398602284925
+reversal_errors,Inversion : erreurs par essai,Tukey HSD,IC,EC,4.912500000000001,0.19047524950453643,0.5433696937076397
+reversal_errors,Inversion : erreurs par essai,Tukey HSD,SC,EC,2.7124999999999986,0.595705593639358,0.34328827128833656
+reversal_perseveration,Inversion : persévération,Mann-Whitney (Holm),IC,SC,0.6875,0.7732377670524615,0.1569853821031113
+reversal_perseveration,Inversion : persévération,Mann-Whitney (Holm),IC,EC,2.3125,0.3135695023834861,0.41561850096039976
+reversal_perseveration,Inversion : persévération,Mann-Whitney (Holm),SC,EC,1.625,0.7732377670524615,0.23685553698805506

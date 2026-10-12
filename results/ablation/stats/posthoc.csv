@@ -1,0 +1,271 @@
+variable,label,method,A,B,diff,p,g
+brain_n_neurons,Nombre de neurones,Games-Howell,EC,EC sans objets,10.900000000000006,8.659739592076221e-15,4.612054721014971
+brain_n_neurons,Nombre de neurones,Games-Howell,EC,EC sans nouveauté,-1.0499999999999972,0.8754228252181987,-0.34307143685397284
+brain_n_neurons,Nombre de neurones,Games-Howell,EC,EC sans social,3.8500000000000085,0.002878932650780208,1.265725754568246
+brain_n_neurons,Nombre de neurones,Games-Howell,EC,EC sans espace,-9.299999999999997,7.321515926861366e-08,-2.457724874174783
+brain_n_neurons,Nombre de neurones,Games-Howell,EC,IC,16.450000000000003,0.0,7.348120368120331
+brain_n_neurons,Nombre de neurones,Games-Howell,EC sans objets,EC sans nouveauté,-11.950000000000003,8.515410598874951e-14,-4.5130163275817425
+brain_n_neurons,Nombre de neurones,Games-Howell,EC sans objets,EC sans social,-7.049999999999997,1.8648169231028078e-08,-2.6846083941286603
+brain_n_neurons,Nombre de neurones,Games-Howell,EC sans objets,EC sans espace,-20.200000000000003,4.773959005888173e-15,-5.840315918285099
+brain_n_neurons,Nombre de neurones,Games-Howell,EC sans objets,IC,5.549999999999997,6.279754494187273e-12,3.4056157277598134
+brain_n_neurons,Nombre de neurones,Games-Howell,EC sans nouveauté,EC sans social,4.900000000000006,0.0002991079766535565,1.4995181578333086
+brain_n_neurons,Nombre de neurones,Games-Howell,EC sans nouveauté,EC sans espace,-8.25,1.3871497013262513e-06,-2.0791749062703784
+brain_n_neurons,Nombre de neurones,Games-Howell,EC sans nouveauté,IC,17.5,1.3322676295501878e-15,6.897324899255932
+brain_n_neurons,Nombre de neurones,Games-Howell,EC sans social,EC sans espace,-13.150000000000006,2.3774759938532952e-11,-3.326254417881788
+brain_n_neurons,Nombre de neurones,Games-Howell,EC sans social,IC,12.599999999999994,6.317169010117141e-14,5.011055459425403
+brain_n_neurons,Nombre de neurones,Games-Howell,EC sans espace,IC,25.75,0.0,7.630230731554532
+brain_n_synapses,Nombre de synapses,Games-Howell,EC,EC sans objets,3947.6000000000004,8.881784197001252e-16,14.514456274373396
+brain_n_synapses,Nombre de synapses,Games-Howell,EC,EC sans nouveauté,-238.94999999999982,0.42881528557248494,-0.5834358399522542
+brain_n_synapses,Nombre de synapses,Games-Howell,EC,EC sans social,934.8000000000002,1.6998049523486713e-08,2.4819430028476583
+brain_n_synapses,Nombre de synapses,Games-Howell,EC,EC sans espace,-893.0500000000002,2.051091813037864e-05,-1.8316829665693282
+brain_n_synapses,Nombre de synapses,Games-Howell,EC,IC,4604.25,2.7755575615628914e-15,17.329885149804436
+brain_n_synapses,Nombre de synapses,Games-Howell,EC sans objets,EC sans nouveauté,-4186.55,1.6653345369377348e-15,-12.585315280454205
+brain_n_synapses,Nombre de synapses,Games-Howell,EC sans objets,EC sans social,-3012.8,0.0,-10.347231745261242
+brain_n_synapses,Nombre de synapses,Games-Howell,EC sans objets,EC sans espace,-4840.650000000001,0.0,-11.389490685166022
+brain_n_synapses,Nombre de synapses,Games-Howell,EC sans objets,IC,656.6499999999996,0.0,5.649647746485409
+brain_n_synapses,Nombre de synapses,Games-Howell,EC sans nouveauté,EC sans social,1173.75,1.162320240055692e-09,2.777806340629327
+brain_n_synapses,Nombre de synapses,Games-Howell,EC sans nouveauté,EC sans espace,-654.1000000000004,0.003533423492025234,-1.248685550283172
+brain_n_synapses,Nombre de synapses,Games-Howell,EC sans nouveauté,IC,4843.2,1.9984014443252818e-15,14.787165309694618
+brain_n_synapses,Nombre de synapses,Games-Howell,EC sans social,EC sans espace,-1827.8500000000004,2.930100606590713e-12,-3.666568214218151
+brain_n_synapses,Nombre de synapses,Games-Howell,EC sans social,IC,3669.45,2.3314683517128287e-15,12.86177136247841
+brain_n_synapses,Nombre de synapses,Games-Howell,EC sans espace,IC,5497.3,0.0,13.057409767056239
+brain_fan_in_mean,Complexité dendritique (synapses / neurone),Mann-Whitney (Holm),EC,EC sans objets,45.05809159975826,1.0193422692260037e-06,16.89598296512153
+brain_fan_in_mean,Complexité dendritique (synapses / neurone),Mann-Whitney (Holm),EC,EC sans nouveauté,-0.44396961063627316,0.5157891163148204,-0.4871307948699344
+brain_fan_in_mean,Complexité dendritique (synapses / neurone),Mann-Whitney (Holm),EC,EC sans social,8.348327229305355,1.0251783453582611e-06,2.638210968200911
+brain_fan_in_mean,Complexité dendritique (synapses / neurone),Mann-Whitney (Holm),EC,EC sans espace,-0.00915388883555579,1.0,-0.09115281337414768
+brain_fan_in_mean,Complexité dendritique (synapses / neurone),Mann-Whitney (Holm),EC,IC,51.68133952460542,1.0193422692260037e-06,19.298028898314016
+brain_fan_in_mean,Complexité dendritique (synapses / neurone),Mann-Whitney (Holm),EC sans objets,EC sans nouveauté,-45.50206121039453,1.0193422692260037e-06,-16.17346049694616
+brain_fan_in_mean,Complexité dendritique (synapses / neurone),Mann-Whitney (Holm),EC sans objets,EC sans social,-36.7097643704529,1.0193422692260037e-06,-18.737579556489084
+brain_fan_in_mean,Complexité dendritique (synapses / neurone),Mann-Whitney (Holm),EC sans objets,EC sans espace,-45.06724548859381,1.0193422692260037e-06,-20.24642890421454
+brain_fan_in_mean,Complexité dendritique (synapses / neurone),Mann-Whitney (Holm),EC sans objets,IC,6.623247924847163,1.0193422692260037e-06,5.00032740466155
+brain_fan_in_mean,Complexité dendritique (synapses / neurone),Mann-Whitney (Holm),EC sans nouveauté,EC sans social,8.792296839941628,1.0193422692260037e-06,3.029231359420047
+brain_fan_in_mean,Complexité dendritique (synapses / neurone),Mann-Whitney (Holm),EC sans nouveauté,EC sans espace,0.43481572180071737,0.5157891163148204,0.442786436074846
+brain_fan_in_mean,Complexité dendritique (synapses / neurone),Mann-Whitney (Holm),EC sans nouveauté,IC,52.12530913524169,1.0193422692260037e-06,18.390358488227122
+brain_fan_in_mean,Complexité dendritique (synapses / neurone),Mann-Whitney (Holm),EC sans social,EC sans espace,-8.35748111814091,1.0193422692260037e-06,-3.105122500461907
+brain_fan_in_mean,Complexité dendritique (synapses / neurone),Mann-Whitney (Holm),EC sans social,IC,43.333012295300065,1.0193422692260037e-06,21.940610843914918
+brain_fan_in_mean,Complexité dendritique (synapses / neurone),Mann-Whitney (Holm),EC sans espace,IC,51.690493413440976,1.0193422692260037e-06,23.077381265750926
+brain_synaptic_strength,Force synaptique moyenne,Mann-Whitney (Holm),EC,EC sans objets,-0.0066440012305975515,0.00012505163702974243,-1.401521865163928
+brain_synaptic_strength,Force synaptique moyenne,Mann-Whitney (Holm),EC,EC sans nouveauté,0.001361471600830555,0.9806685290190209,0.1450731966163489
+brain_synaptic_strength,Force synaptique moyenne,Mann-Whitney (Holm),EC,EC sans social,5.8686360716805885e-05,0.9806685290190209,-0.26490785354881285
+brain_synaptic_strength,Force synaptique moyenne,Mann-Whitney (Holm),EC,EC sans espace,-0.0021491143852472444,0.5086431570750303,-0.50564886354264
+brain_synaptic_strength,Force synaptique moyenne,Mann-Whitney (Holm),EC,IC,-0.025911383330822046,1.0193422692260037e-06,-1.752331349679478
+brain_synaptic_strength,Force synaptique moyenne,Mann-Whitney (Holm),EC sans objets,EC sans nouveauté,0.008005472831428107,6.616276705852164e-06,1.4652336102465473
+brain_synaptic_strength,Force synaptique moyenne,Mann-Whitney (Holm),EC sans objets,EC sans social,0.006702687591314357,0.00012505163702974243,1.0246947184757065
+brain_synaptic_strength,Force synaptique moyenne,Mann-Whitney (Holm),EC sans objets,EC sans espace,0.004494886845350307,0.00012505163702974243,1.210582779524028
+brain_synaptic_strength,Force synaptique moyenne,Mann-Whitney (Holm),EC sans objets,IC,-0.019267382100224495,0.0005804691742142532,-1.0877588698493106
+brain_synaptic_strength,Force synaptique moyenne,Mann-Whitney (Holm),EC sans nouveauté,EC sans social,-0.001302785240113749,0.5086431570750303,-0.35502569513550225
+brain_synaptic_strength,Force synaptique moyenne,Mann-Whitney (Holm),EC sans nouveauté,EC sans espace,-0.0035105859860777994,0.014047635644961224,-0.6515677079714824
+brain_synaptic_strength,Force synaptique moyenne,Mann-Whitney (Holm),EC sans nouveauté,IC,-0.0272728549316526,2.4930255380386973e-06,-1.7811174103052665
+brain_synaptic_strength,Force synaptique moyenne,Mann-Whitney (Holm),EC sans social,EC sans espace,-0.0022078007459640503,0.5086431570750303,-0.020402380285537574
+brain_synaptic_strength,Force synaptique moyenne,Mann-Whitney (Holm),EC sans social,IC,-0.025970069691538852,4.726566567439906e-06,-1.6139163943647152
+brain_synaptic_strength,Force synaptique moyenne,Mann-Whitney (Holm),EC sans espace,IC,-0.023762268945574802,1.0193422692260037e-06,-1.6662528308623652
+brain_coverage_objects,Territoire cortical « objets »,Games-Howell,EC,EC sans objets,0.29810734630744135,3.1086244689504383e-15,17.762268232560693
+brain_coverage_objects,Territoire cortical « objets »,Games-Howell,EC,EC sans nouveauté,-0.014689521799124472,0.48088638180576826,-0.556642878414163
+brain_coverage_objects,Territoire cortical « objets »,Games-Howell,EC,EC sans social,-0.005504208267381128,0.9462498125645539,-0.2759176397250364
+brain_coverage_objects,Territoire cortical « objets »,Games-Howell,EC,EC sans espace,0.02126988636644439,0.019539438213732496,1.054573544237082
+brain_coverage_objects,Territoire cortical « objets »,Games-Howell,EC,IC,0.28787246545506967,0.0,16.84078552405561
+brain_coverage_objects,Territoire cortical « objets »,Games-Howell,EC sans objets,EC sans nouveauté,-0.3127968681065658,0.0,-14.954414688563682
+brain_coverage_objects,Territoire cortical « objets »,Games-Howell,EC sans objets,EC sans social,-0.3036115545748225,7.66053886991358e-15,-25.74691707076544
+brain_coverage_objects,Territoire cortical « objets »,Games-Howell,EC sans objets,EC sans espace,-0.27683745994099695,4.440892098500626e-16,-22.763691865745276
+brain_coverage_objects,Territoire cortical « objets »,Games-Howell,EC sans objets,IC,-0.010234880852371701,2.6202137388686708e-05,-1.773630167908882
+brain_coverage_objects,Territoire cortical « objets »,Games-Howell,EC sans nouveauté,EC sans social,0.009185313531743344,0.803958758479246,0.3903223575693275
+brain_coverage_objects,Territoire cortical « objets »,Games-Howell,EC sans nouveauté,EC sans espace,0.03595940816556886,0.00041780576416450277,1.5160082904419105
+brain_coverage_objects,Territoire cortical « objets »,Games-Howell,EC sans nouveauté,IC,0.30256198725419414,2.1094237467877974e-15,14.294236546183527
+brain_coverage_objects,Territoire cortical « objets »,Games-Howell,EC sans social,EC sans espace,0.026774094633825518,6.910384500080635e-05,1.6472837431753704
+brain_coverage_objects,Territoire cortical « objets »,Games-Howell,EC sans social,IC,0.2933766737224508,0.0,23.987985333513517
+brain_coverage_objects,Territoire cortical « objets »,Games-Howell,EC sans espace,IC,0.2666025790886253,0.0,21.18159979232255
+brain_dimensionality,Dimensionnalité des représentations,Tukey HSD,EC,EC sans objets,0.43752447529438054,0.042186623050605054,1.054304152365627
+brain_dimensionality,Dimensionnalité des représentations,Tukey HSD,EC,EC sans nouveauté,-0.24795722116599084,0.5486767022507901,-0.5707534732825336
+brain_dimensionality,Dimensionnalité des représentations,Tukey HSD,EC,EC sans social,0.2703861483271459,0.4505787500542068,0.6335301538644377
+brain_dimensionality,Dimensionnalité des représentations,Tukey HSD,EC,EC sans espace,-0.024712670230752742,0.9999813474377691,-0.0495446093318723
+brain_dimensionality,Dimensionnalité des représentations,Tukey HSD,EC,IC,0.17194485661926784,0.8528768925747043,0.3711840599654747
+brain_dimensionality,Dimensionnalité des représentations,Tukey HSD,EC sans objets,EC sans nouveauté,-0.6854816964603714,0.00013414787797527694,-1.5388993891728593
+brain_dimensionality,Dimensionnalité des représentations,Tukey HSD,EC sans objets,EC sans social,-0.16713832696723463,0.8672805309772175,-0.3816093166583783
+brain_dimensionality,Dimensionnalité des représentations,Tukey HSD,EC sans objets,EC sans espace,-0.4622371455251333,0.026391174807488205,-0.9091926207583246
+brain_dimensionality,Dimensionnalité des représentations,Tukey HSD,EC sans objets,IC,-0.2655796186751127,0.47122356580794955,-0.5608114868616584
+brain_dimensionality,Dimensionnalité des représentations,Tukey HSD,EC sans nouveauté,EC sans social,0.5183433694931368,0.008268150831772458,1.1355882171935925
+brain_dimensionality,Dimensionnalité des représentations,Tukey HSD,EC sans nouveauté,EC sans espace,0.2232445509352381,0.6577561965011347,0.4257140839842018
+brain_dimensionality,Dimensionnalité des représentations,Tukey HSD,EC sans nouveauté,IC,0.4199020777852587,0.05795864840952014,0.8557268273823919
+brain_dimensionality,Dimensionnalité des représentations,Tukey HSD,EC sans social,EC sans espace,-0.29509881855789866,0.35008274024840635,-0.5695965029527822
+brain_dimensionality,Dimensionnalité des représentations,Tukey HSD,EC sans social,IC,-0.09844129170787808,0.9852337919208892,-0.20341611141162005
+brain_dimensionality,Dimensionnalité des représentations,Tukey HSD,EC sans espace,IC,0.19665752685002058,0.7670480686962775,0.3585418583444376
+brain_pattern_separation,Séparation de patterns,Mann-Whitney (Holm),EC,EC sans objets,0.11790397746135628,3.674244638668625e-06,2.1709024071820533
+brain_pattern_separation,Séparation de patterns,Mann-Whitney (Holm),EC,EC sans nouveauté,0.005219843067053281,1.0,0.2593192984158499
+brain_pattern_separation,Séparation de patterns,Mann-Whitney (Holm),EC,EC sans social,0.03466664415857623,0.7392329135718094,0.37963228569367846
+brain_pattern_separation,Séparation de patterns,Mann-Whitney (Holm),EC,EC sans espace,0.009563780276794831,1.0,0.13250090695460953
+brain_pattern_separation,Séparation de patterns,Mann-Whitney (Holm),EC,IC,0.10904814538898702,0.001967481617568289,0.9303145711373324
+brain_pattern_separation,Séparation de patterns,Mann-Whitney (Holm),EC sans objets,EC sans nouveauté,-0.112684134394303,3.674244638668625e-06,-3.0487778810471013
+brain_pattern_separation,Séparation de patterns,Mann-Whitney (Holm),EC sans objets,EC sans social,-0.08323733330278005,9.14826906248773e-06,-1.8151134418257375
+brain_pattern_separation,Séparation de patterns,Mann-Whitney (Holm),EC sans objets,EC sans espace,-0.10834019718456145,3.674244638668625e-06,-2.4738531917535393
+brain_pattern_separation,Séparation de patterns,Mann-Whitney (Holm),EC sans objets,IC,-0.00885583207236925,0.1863154652637138,-0.5962160939604357
+brain_pattern_separation,Séparation de patterns,Mann-Whitney (Holm),EC sans nouveauté,EC sans social,0.02944680109152295,0.6450681581760339,0.20323037882856826
+brain_pattern_separation,Séparation de patterns,Mann-Whitney (Holm),EC sans nouveauté,EC sans espace,0.00434393720974155,1.0,-0.13283666189709356
+brain_pattern_separation,Séparation de patterns,Mann-Whitney (Holm),EC sans nouveauté,IC,0.10382830232193374,0.001994380080070045,0.8696130258987903
+brain_pattern_separation,Séparation de patterns,Mann-Whitney (Holm),EC sans social,EC sans espace,-0.0251028638817814,0.7392329135718094,-0.2865152581270397
+brain_pattern_separation,Séparation de patterns,Mann-Whitney (Holm),EC sans social,IC,0.07438150123041079,0.003315703596673456,0.6313401493167664
+brain_pattern_separation,Séparation de patterns,Mann-Whitney (Holm),EC sans espace,IC,0.09948436511219219,0.001991555345487826,0.8931438262333908
+brain_object_sensitivity,Sensibilité corticale aux objets,Mann-Whitney (Holm),EC,EC sans objets,0.004736449285701401,1.0193422692260037e-06,4.406595868165514
+brain_object_sensitivity,Sensibilité corticale aux objets,Mann-Whitney (Holm),EC,EC sans nouveauté,-9.151780977839901e-05,1.0,-0.29733888154221033
+brain_object_sensitivity,Sensibilité corticale aux objets,Mann-Whitney (Holm),EC,EC sans social,0.0008234134875238506,1.0,0.3558804268753074
+brain_object_sensitivity,Sensibilité corticale aux objets,Mann-Whitney (Holm),EC,EC sans espace,0.0002353743184358003,1.0,-0.15139126993259971
+brain_object_sensitivity,Sensibilité corticale aux objets,Mann-Whitney (Holm),EC,IC,0.004587677518429751,1.8029691721083095e-05,2.547595544569862
+brain_object_sensitivity,Sensibilité corticale aux objets,Mann-Whitney (Holm),EC sans objets,EC sans nouveauté,-0.0048279670954798,1.0193422692260037e-06,-5.143523090316538
+brain_object_sensitivity,Sensibilité corticale aux objets,Mann-Whitney (Holm),EC sans objets,EC sans social,-0.003913035798177551,1.0193422692260037e-06,-5.005449210355731
+brain_object_sensitivity,Sensibilité corticale aux objets,Mann-Whitney (Holm),EC sans objets,EC sans espace,-0.004501074967265601,1.0193422692260037e-06,-5.0048082214069405
+brain_object_sensitivity,Sensibilité corticale aux objets,Mann-Whitney (Holm),EC sans objets,IC,-0.00014877176727165004,0.17664530647249704,-0.5918749931510608
+brain_object_sensitivity,Sensibilité corticale aux objets,Mann-Whitney (Holm),EC sans nouveauté,EC sans social,0.0009149312973022496,0.15588937916869194,0.714238115074612
+brain_object_sensitivity,Sensibilité corticale aux objets,Mann-Whitney (Holm),EC sans nouveauté,EC sans espace,0.0003268921282141993,1.0,0.1548298478853191
+brain_object_sensitivity,Sensibilité corticale aux objets,Mann-Whitney (Holm),EC sans nouveauté,IC,0.00467919532820815,1.152001583172822e-05,2.899330856833861
+brain_object_sensitivity,Sensibilité corticale aux objets,Mann-Whitney (Holm),EC sans social,EC sans espace,-0.0005880391690880503,0.24931845105270245,-0.5514353100670459
+brain_object_sensitivity,Sensibilité corticale aux objets,Mann-Whitney (Holm),EC sans social,IC,0.0037642640309059,6.0619048477810115e-05,2.4869686308083696
+brain_object_sensitivity,Sensibilité corticale aux objets,Mann-Whitney (Holm),EC sans espace,IC,0.00435230319999395,2.420791820513136e-05,2.7826117408824986
+nor_neural_di,Indice de discrimination neuronal (NOR),Mann-Whitney (Holm),EC,EC sans objets,0.2814916869306795,0.08482985519730663,0.8639182735127121
+nor_neural_di,Indice de discrimination neuronal (NOR),Mann-Whitney (Holm),EC,EC sans nouveauté,0.027226510074461197,1.0,-0.20011532953072644
+nor_neural_di,Indice de discrimination neuronal (NOR),Mann-Whitney (Holm),EC,EC sans social,0.011995916218861535,1.0,-0.5771469651378749
+nor_neural_di,Indice de discrimination neuronal (NOR),Mann-Whitney (Holm),EC,EC sans espace,0.06183587772056398,1.0,-0.06487781643714505
+nor_neural_di,Indice de discrimination neuronal (NOR),Mann-Whitney (Holm),EC,IC,0.27109266477324423,0.16587675365745994,0.897545412914905
+nor_neural_di,Indice de discrimination neuronal (NOR),Mann-Whitney (Holm),EC sans objets,EC sans nouveauté,-0.2542651768562183,0.021388506450065292,-1.0958806437953446
+nor_neural_di,Indice de discrimination neuronal (NOR),Mann-Whitney (Holm),EC sans objets,EC sans social,-0.26949577071181796,0.006441018178126585,-1.405256011426784
+nor_neural_di,Indice de discrimination neuronal (NOR),Mann-Whitney (Holm),EC sans objets,EC sans espace,-0.21965580921011552,0.08482985519730663,-0.8716234196997272
+nor_neural_di,Indice de discrimination neuronal (NOR),Mann-Whitney (Holm),EC sans objets,IC,-0.010399022157435267,1.0,0.06208599601869358
+nor_neural_di,Indice de discrimination neuronal (NOR),Mann-Whitney (Holm),EC sans nouveauté,EC sans social,-0.015230593855599661,1.0,-0.45449821252416023
+nor_neural_di,Indice de discrimination neuronal (NOR),Mann-Whitney (Holm),EC sans nouveauté,EC sans espace,0.034609367646102784,1.0,0.1075191961919577
+nor_neural_di,Indice de discrimination neuronal (NOR),Mann-Whitney (Holm),EC sans nouveauté,IC,0.24386615469878303,0.02112834810127685,1.116963025308942
+nor_neural_di,Indice de discrimination neuronal (NOR),Mann-Whitney (Holm),EC sans social,EC sans espace,0.049839961501702446,1.0,0.43905170038752805
+nor_neural_di,Indice de discrimination neuronal (NOR),Mann-Whitney (Holm),EC sans social,IC,0.2590967485543827,0.004571983750544179,1.4086747029995985
+nor_neural_di,Indice de discrimination neuronal (NOR),Mann-Whitney (Holm),EC sans espace,IC,0.20925678705268025,0.08482985519730663,0.9051222266500402
+of_exploration,Champ ouvert : exploration,Mann-Whitney (Holm),EC,EC sans objets,0.01388888888888884,1.0,-0.1747810448649224
+of_exploration,Champ ouvert : exploration,Mann-Whitney (Holm),EC,EC sans nouveauté,0.00347222222222221,1.0,0.07737539325680674
+of_exploration,Champ ouvert : exploration,Mann-Whitney (Holm),EC,EC sans social,0.01041666666666663,1.0,-0.2395039500673493
+of_exploration,Champ ouvert : exploration,Mann-Whitney (Holm),EC,EC sans espace,0.003472222222222099,1.0,-0.11929146356785147
+of_exploration,Champ ouvert : exploration,Mann-Whitney (Holm),EC,IC,0.04513888888888884,1.0,0.3498113379102273
+of_exploration,Champ ouvert : exploration,Mann-Whitney (Holm),EC sans objets,EC sans nouveauté,-0.01041666666666663,1.0,0.28886008701119115
+of_exploration,Champ ouvert : exploration,Mann-Whitney (Holm),EC sans objets,EC sans social,-0.00347222222222221,1.0,-0.08394325613094815
+of_exploration,Champ ouvert : exploration,Mann-Whitney (Holm),EC sans objets,EC sans espace,-0.01041666666666674,1.0,0.039029526850671924
+of_exploration,Champ ouvert : exploration,Mann-Whitney (Holm),EC sans objets,IC,0.03125,1.0,0.536974643840209
+of_exploration,Champ ouvert : exploration,Mann-Whitney (Holm),EC sans nouveauté,EC sans social,0.00694444444444442,1.0,-0.3584707489930445
+of_exploration,Champ ouvert : exploration,Mann-Whitney (Holm),EC sans nouveauté,EC sans espace,-1.1102230246251565e-16,1.0,-0.20871661468597094
+of_exploration,Champ ouvert : exploration,Mann-Whitney (Holm),EC sans nouveauté,IC,0.04166666666666663,1.0,0.30505079285415837
+of_exploration,Champ ouvert : exploration,Mann-Whitney (Holm),EC sans social,EC sans espace,-0.006944444444444531,1.0,0.10754472505619983
+of_exploration,Champ ouvert : exploration,Mann-Whitney (Holm),EC sans social,IC,0.03472222222222221,1.0,0.5875942203822433
+of_exploration,Champ ouvert : exploration,Mann-Whitney (Holm),EC sans espace,IC,0.04166666666666674,1.0,0.45801583568989634
+of_center_time,Champ ouvert : temps au centre,Games-Howell,EC,EC sans objets,-0.045499999999999985,0.6159543352338979,-0.49056421291920593
+of_center_time,Champ ouvert : temps au centre,Games-Howell,EC,EC sans nouveauté,-0.014333333333333309,0.9790707341906275,-0.22123479949463262
+of_center_time,Champ ouvert : temps au centre,Games-Howell,EC,EC sans social,-0.01416666666666666,0.9820022486284489,-0.21376030677436847
+of_center_time,Champ ouvert : temps au centre,Games-Howell,EC,EC sans espace,-0.05299999999999999,0.20621622727933409,-0.725290279296709
+of_center_time,Champ ouvert : temps au centre,Games-Howell,EC,IC,-0.032833333333333325,0.7247923316126068,-0.4349386255751064
+of_center_time,Champ ouvert : temps au centre,Games-Howell,EC sans objets,EC sans nouveauté,0.031166666666666676,0.8977050702123599,0.32480412766636446
+of_center_time,Champ ouvert : temps au centre,Games-Howell,EC sans objets,EC sans social,0.031333333333333324,0.8997442275694276,0.3231419615784089
+of_center_time,Champ ouvert : temps au centre,Games-Howell,EC sans objets,EC sans espace,-0.007500000000000007,0.9998858240914225,-0.07372175701861293
+of_center_time,Champ ouvert : temps au centre,Games-Howell,EC sans objets,IC,0.01266666666666666,0.9986493173096215,0.12240399161466328
+of_center_time,Champ ouvert : temps au centre,Games-Howell,EC sans nouveauté,EC sans social,0.0001666666666666483,0.9999999999960776,0.0023577352808081373
+of_center_time,Champ ouvert : temps au centre,Games-Howell,EC sans nouveauté,EC sans espace,-0.03866666666666668,0.5923466879937184,-0.5015041592968432
+of_center_time,Champ ouvert : temps au centre,Games-Howell,EC sans nouveauté,IC,-0.018500000000000016,0.9737027288721053,-0.2330140569785666
+of_center_time,Champ ouvert : temps au centre,Games-Howell,EC sans social,EC sans espace,-0.03883333333333333,0.6043048223585381,-0.4956140636687337
+of_center_time,Champ ouvert : temps au centre,Games-Howell,EC sans social,IC,-0.018666666666666665,0.9744279583884581,-0.23156383807754258
+of_center_time,Champ ouvert : temps au centre,Games-Howell,EC sans espace,IC,0.020166666666666666,0.9734417255794168,0.2337101247514183
+nor_exploration,NOR : temps d'exploration des objets,Tukey HSD,EC,EC sans objets,0.010125000000000023,0.022912392260274084,0.9998533475966784
+nor_exploration,NOR : temps d'exploration des objets,Tukey HSD,EC,EC sans nouveauté,0.005750000000000019,0.4668847152090646,0.6216554246382979
+nor_exploration,NOR : temps d'exploration des objets,Tukey HSD,EC,EC sans social,0.008125000000000035,0.11855774622953308,0.9591249578909689
+nor_exploration,NOR : temps d'exploration des objets,Tukey HSD,EC,EC sans espace,-0.0012499999999999872,0.9987695924739567,-0.12046358215352038
+nor_exploration,NOR : temps d'exploration des objets,Tukey HSD,EC,IC,0.007000000000000034,0.24726853163966256,0.6199318090687905
+nor_exploration,NOR : temps d'exploration des objets,Tukey HSD,EC sans objets,EC sans nouveauté,-0.004375000000000004,0.7429148679123464,-0.43951035645804226
+nor_exploration,NOR : temps d'exploration des objets,Tukey HSD,EC sans objets,EC sans social,-0.001999999999999988,0.9887398233467717,-0.21655324294837106
+nor_exploration,NOR : temps d'exploration des objets,Tukey HSD,EC sans objets,EC sans espace,-0.01137500000000001,0.006779915197981046,-1.0332054064090004
+nor_exploration,NOR : temps d'exploration des objets,Tukey HSD,EC sans objets,IC,-0.003124999999999989,0.9231701969927192,-0.2631412089370577
+nor_exploration,NOR : temps d'exploration des objets,Tukey HSD,EC sans nouveauté,EC sans social,0.002375000000000016,0.9757003410028148,0.2873696751188931
+nor_exploration,NOR : temps d'exploration des objets,Tukey HSD,EC sans nouveauté,EC sans espace,-0.007000000000000006,0.24726853163966667,-0.6856981012550473
+nor_exploration,NOR : temps d'exploration des objets,Tukey HSD,EC sans nouveauté,IC,0.001250000000000015,0.9987695924739566,0.11223475835277312
+nor_exploration,NOR : temps d'exploration des objets,Tukey HSD,EC sans social,EC sans espace,-0.009375000000000022,0.04447437572412394,-0.9858916583957862
+nor_exploration,NOR : temps d'exploration des objets,Tukey HSD,EC sans social,IC,-0.001125000000000001,0.9992611746460317,-0.10714280361776707
+nor_exploration,NOR : temps d'exploration des objets,Tukey HSD,EC sans espace,IC,0.008250000000000021,0.10828978431029823,0.6823981889683219
+nor_di,NOR : indice de discrimination comportemental,Tukey HSD,EC,EC sans objets,0.15835284049810736,0.20825872263138068,0.6933936326066641
+nor_di,NOR : indice de discrimination comportemental,Tukey HSD,EC,EC sans nouveauté,0.06344470887654693,0.9416896992602051,0.3118742533196884
+nor_di,NOR : indice de discrimination comportemental,Tukey HSD,EC,EC sans social,0.1020531272469622,0.6817945556551315,0.42998397078938916
+nor_di,NOR : indice de discrimination comportemental,Tukey HSD,EC,EC sans espace,0.033717847372822796,0.9965485128628123,0.15863391596566453
+nor_di,NOR : indice de discrimination comportemental,Tukey HSD,EC,IC,0.14449829548049015,0.3018787302429684,0.7022105901367941
+nor_di,NOR : indice de discrimination comportemental,Tukey HSD,EC sans objets,EC sans nouveauté,-0.09490813162156042,0.74461511253644,-0.4255036079318591
+nor_di,NOR : indice de discrimination comportemental,Tukey HSD,EC sans objets,EC sans social,-0.056299713251145155,0.9646439279330885,-0.22134046358815493
+nor_di,NOR : indice de discrimination comportemental,Tukey HSD,EC sans objets,EC sans espace,-0.12463499312528456,0.4702453352810685,-0.5386177908417222
+nor_di,NOR : indice de discrimination comportemental,Tukey HSD,EC sans objets,IC,-0.013854545017617202,0.9999547409097491,-0.061523652108338815
+nor_di,NOR : indice de discrimination comportemental,Tukey HSD,EC sans nouveauté,EC sans social,0.03860841837041526,0.9934841872509244,0.16625599609873357
+nor_di,NOR : indice de discrimination comportemental,Tukey HSD,EC sans nouveauté,EC sans espace,-0.02972686150372414,0.9981054192706749,-0.1437332574272756
+nor_di,NOR : indice de discrimination comportemental,Tukey HSD,EC sans nouveauté,IC,0.08105358660394321,0.850041032814793,0.40557126365635476
+nor_di,NOR : indice de discrimination comportemental,Tukey HSD,EC sans social,EC sans espace,-0.0683352798741394,0.9213583390012436,-0.28443046706666925
+nor_di,NOR : indice de discrimination comportemental,Tukey HSD,EC sans social,IC,0.04244516823352795,0.9899112655210538,0.18117245575159904
+nor_di,NOR : indice de discrimination comportemental,Tukey HSD,EC sans espace,IC,0.11078044810766735,0.6006490441514385,0.5297267970951468
+maze_errors,Hebb-Williams : erreurs par essai,Tukey HSD,EC,EC sans objets,-1.125,0.9544726994026875,-0.2850727370514074
+maze_errors,Hebb-Williams : erreurs par essai,Tukey HSD,EC,EC sans nouveauté,-2.010937499999997,0.6377749068668275,-0.6684973639811812
+maze_errors,Hebb-Williams : erreurs par essai,Tukey HSD,EC,EC sans social,-1.7749999999999986,0.7497756852315816,-0.42721172247237305
+maze_errors,Hebb-Williams : erreurs par essai,Tukey HSD,EC,EC sans espace,-0.765625,0.9917061722102668,-0.1804278329358626
+maze_errors,Hebb-Williams : erreurs par essai,Tukey HSD,EC,IC,-0.75,0.992459649419173,-0.19504907762000043
+maze_errors,Hebb-Williams : erreurs par essai,Tukey HSD,EC sans objets,EC sans nouveauté,-0.8859374999999972,0.9838850489628944,-0.23825928114992767
+maze_errors,Hebb-Williams : erreurs par essai,Tukey HSD,EC sans objets,EC sans social,-0.6499999999999986,0.9961372434298769,-0.1384542066132391
+maze_errors,Hebb-Williams : erreurs par essai,Tukey HSD,EC sans objets,EC sans espace,0.359375,0.9997797339032147,0.07528972275692303
+maze_errors,Hebb-Williams : erreurs par essai,Tukey HSD,EC sans objets,IC,0.375,0.9997285587718422,0.08478429246952128
+maze_errors,Hebb-Williams : erreurs par essai,Tukey HSD,EC sans nouveauté,EC sans social,0.23593749999999858,0.9999724557184175,0.059898597479258485
+maze_errors,Hebb-Williams : erreurs par essai,Tukey HSD,EC sans nouveauté,EC sans espace,1.2453124999999972,0.9308962785711064,0.3088396597151594
+maze_errors,Hebb-Williams : erreurs par essai,Tukey HSD,EC sans nouveauté,IC,1.2609374999999972,0.9273540859053916,0.34921104314071844
+maze_errors,Hebb-Williams : erreurs par essai,Tukey HSD,EC sans social,EC sans espace,1.0093749999999986,0.9713367786589722,0.20403824152846087
+maze_errors,Hebb-Williams : erreurs par essai,Tukey HSD,EC sans social,IC,1.0249999999999986,0.9693657605832391,0.2223441364011209
+maze_errors,Hebb-Williams : erreurs par essai,Tukey HSD,EC sans espace,IC,0.015625,0.9999999999642442,0.0033316100500292998
+maze_trials_to_criterion,Hebb-Williams : essais jusqu'au critère,Mann-Whitney (Holm),EC,EC sans objets,0.25,1.0,-0.07639900593636885
+maze_trials_to_criterion,Hebb-Williams : essais jusqu'au critère,Mann-Whitney (Holm),EC,EC sans nouveauté,0.75,1.0,0.3382201595154063
+maze_trials_to_criterion,Hebb-Williams : essais jusqu'au critère,Mann-Whitney (Holm),EC,EC sans social,-0.375,1.0,-0.4273752206796214
+maze_trials_to_criterion,Hebb-Williams : essais jusqu'au critère,Mann-Whitney (Holm),EC,EC sans espace,0.25,1.0,-0.21545141945149096
+maze_trials_to_criterion,Hebb-Williams : essais jusqu'au critère,Mann-Whitney (Holm),EC,IC,1.0,1.0,0.3734692817171996
+maze_trials_to_criterion,Hebb-Williams : essais jusqu'au critère,Mann-Whitney (Holm),EC sans objets,EC sans nouveauté,0.5,1.0,0.3927682194189555
+maze_trials_to_criterion,Hebb-Williams : essais jusqu'au critère,Mann-Whitney (Holm),EC sans objets,EC sans social,-0.625,1.0,-0.3382470338787993
+maze_trials_to_criterion,Hebb-Williams : essais jusqu'au critère,Mann-Whitney (Holm),EC sans objets,EC sans espace,0.0,1.0,-0.12276126142586223
+maze_trials_to_criterion,Hebb-Williams : essais jusqu'au critère,Mann-Whitney (Holm),EC sans objets,IC,0.75,1.0,0.42213648342229015
+maze_trials_to_criterion,Hebb-Williams : essais jusqu'au critère,Mann-Whitney (Holm),EC sans nouveauté,EC sans social,-1.125,0.449149111063714,-0.7222423278727798
+maze_trials_to_criterion,Hebb-Williams : essais jusqu'au critère,Mann-Whitney (Holm),EC sans nouveauté,EC sans espace,-0.5,1.0,-0.5623248856925261
+maze_trials_to_criterion,Hebb-Williams : essais jusqu'au critère,Mann-Whitney (Holm),EC sans nouveauté,IC,0.25,1.0,0.0807253356628655
+maze_trials_to_criterion,Hebb-Williams : essais jusqu'au critère,Mann-Whitney (Holm),EC sans social,EC sans espace,0.625,1.0,0.24897737644654971
+maze_trials_to_criterion,Hebb-Williams : essais jusqu'au critère,Mann-Whitney (Holm),EC sans social,IC,1.375,0.449149111063714,0.7173793921224414
+maze_trials_to_criterion,Hebb-Williams : essais jusqu'au critère,Mann-Whitney (Holm),EC sans espace,IC,0.75,1.0,0.5658059059852218
+maze_latency,Hebb-Williams : latence (pas),Tukey HSD,EC,EC sans objets,-0.8874999999999886,0.9998942017031085,-0.07701343843815266
+maze_latency,Hebb-Williams : latence (pas),Tukey HSD,EC,EC sans nouveauté,-5.185937499999994,0.7342546639563525,-0.5668863761275383
+maze_latency,Hebb-Williams : latence (pas),Tukey HSD,EC,EC sans social,-5.2828124999999915,0.7186831339323765,-0.43951135744968356
+maze_latency,Hebb-Williams : latence (pas),Tukey HSD,EC,EC sans espace,-1.1062499999999886,0.9996873314337373,-0.0865984267211883
+maze_latency,Hebb-Williams : latence (pas),Tukey HSD,EC,IC,-0.05781249999999716,0.9999999998718088,-0.005136275712063341
+maze_latency,Hebb-Williams : latence (pas),Tukey HSD,EC sans objets,EC sans nouveauté,-4.298437500000006,0.8590521607333377,-0.41152002842042074
+maze_latency,Hebb-Williams : latence (pas),Tukey HSD,EC sans objets,EC sans social,-4.395312500000003,0.8472733958462855,-0.33721425325876425
+maze_latency,Hebb-Williams : latence (pas),Tukey HSD,EC sans objets,EC sans espace,-0.21875,0.9999999007598801,-0.01592845243155729
+maze_latency,Hebb-Williams : latence (pas),Tukey HSD,EC sans objets,IC,0.8296874999999915,0.9999241435917442,0.06727284774954546
+maze_latency,Hebb-Williams : latence (pas),Tukey HSD,EC sans nouveauté,EC sans social,-0.09687499999999716,0.9999999983068352,-0.008814977825329886
+maze_latency,Hebb-Williams : latence (pas),Tukey HSD,EC sans nouveauté,EC sans espace,4.079687500000006,0.8837620345443843,0.3454271242150025
+maze_latency,Hebb-Williams : latence (pas),Tukey HSD,EC sans nouveauté,IC,5.128124999999997,0.7433992173034425,0.5053057380855089
+maze_latency,Hebb-Williams : latence (pas),Tukey HSD,EC sans social,EC sans espace,4.176562500000003,0.8731466574533274,0.2951242946291509
+maze_latency,Hebb-Williams : latence (pas),Tukey HSD,EC sans social,IC,5.224999999999994,0.728012072129035,0.4082784642685727
+maze_latency,Hebb-Williams : latence (pas),Tukey HSD,EC sans espace,IC,1.0484374999999915,0.9997596955983198,0.07761036659480963
+reversal_errors,Inversion : erreurs par essai,Mann-Whitney (Holm),EC,EC sans objets,-2.0,1.0,-0.3484589818447978
+reversal_errors,Inversion : erreurs par essai,Mann-Whitney (Holm),EC,EC sans nouveauté,-0.5625,1.0,-0.38804297100258306
+reversal_errors,Inversion : erreurs par essai,Mann-Whitney (Holm),EC,EC sans social,1.6875,1.0,-0.10513772273660975
+reversal_errors,Inversion : erreurs par essai,Mann-Whitney (Holm),EC,EC sans espace,-7.125,0.04574606871043907,-1.0449406479583423
+reversal_errors,Inversion : erreurs par essai,Mann-Whitney (Holm),EC,IC,-1.875,1.0,-0.5433696937076397
+reversal_errors,Inversion : erreurs par essai,Mann-Whitney (Holm),EC sans objets,EC sans nouveauté,1.4375,1.0,-0.1463052570693536
+reversal_errors,Inversion : erreurs par essai,Mann-Whitney (Holm),EC sans objets,EC sans social,3.6875,1.0,0.18036258892471305
+reversal_errors,Inversion : erreurs par essai,Mann-Whitney (Holm),EC sans objets,EC sans espace,-5.125,0.20870302690131892,-0.7668108454243266
+reversal_errors,Inversion : erreurs par essai,Mann-Whitney (Holm),EC sans objets,IC,0.125,1.0,-0.3023842289044727
+reversal_errors,Inversion : erreurs par essai,Mann-Whitney (Holm),EC sans nouveauté,EC sans social,2.25,1.0,0.26707596550646917
+reversal_errors,Inversion : erreurs par essai,Mann-Whitney (Holm),EC sans nouveauté,EC sans espace,-6.5625,1.0,-0.4198769405134711
+reversal_errors,Inversion : erreurs par essai,Mann-Whitney (Holm),EC sans nouveauté,IC,-1.3125,1.0,-0.12348219848654621
+reversal_errors,Inversion : erreurs par essai,Mann-Whitney (Holm),EC sans social,EC sans espace,-8.8125,0.09176531684545539,-0.794493621736827
+reversal_errors,Inversion : erreurs par essai,Mann-Whitney (Holm),EC sans social,IC,-3.5625,1.0,-0.40503396202005937
+reversal_errors,Inversion : erreurs par essai,Mann-Whitney (Holm),EC sans espace,IC,5.25,1.0,0.28152019721747346
+reversal_perseveration,Inversion : persévération,Mann-Whitney (Holm),EC,EC sans objets,-1.75,1.0,-0.1926691068871793
+reversal_perseveration,Inversion : persévération,Mann-Whitney (Holm),EC,EC sans nouveauté,-0.8125,1.0,-0.23578214313895754
+reversal_perseveration,Inversion : persévération,Mann-Whitney (Holm),EC,EC sans social,-0.0625,1.0,0.05075716421797227
+reversal_perseveration,Inversion : persévération,Mann-Whitney (Holm),EC,EC sans espace,-3.5625,0.22318694611633205,-0.6277089405994326
+reversal_perseveration,Inversion : persévération,Mann-Whitney (Holm),EC,IC,-2.3125,1.0,-0.41561850096039976
+reversal_perseveration,Inversion : persévération,Mann-Whitney (Holm),EC sans objets,EC sans nouveauté,0.9375,1.0,-0.07220694369385328
+reversal_perseveration,Inversion : persévération,Mann-Whitney (Holm),EC sans objets,EC sans social,1.6875,1.0,0.2827448062110397
+reversal_perseveration,Inversion : persévération,Mann-Whitney (Holm),EC sans objets,EC sans espace,-1.8125,1.0,-0.53445248778986
+reversal_perseveration,Inversion : persévération,Mann-Whitney (Holm),EC sans objets,IC,-0.5625,1.0,-0.2900097067979946
+reversal_perseveration,Inversion : persévération,Mann-Whitney (Holm),EC sans nouveauté,EC sans social,0.75,1.0,0.31752871409502775
+reversal_perseveration,Inversion : persévération,Mann-Whitney (Holm),EC sans nouveauté,EC sans espace,-2.75,1.0,-0.41891583047105224
+reversal_perseveration,Inversion : persévération,Mann-Whitney (Holm),EC sans nouveauté,IC,-1.5,1.0,-0.2030893003939233
+reversal_perseveration,Inversion : persévération,Mann-Whitney (Holm),EC sans social,EC sans espace,-3.5,0.24137559722586038,-0.7494318812334387
+reversal_perseveration,Inversion : persévération,Mann-Whitney (Holm),EC sans social,IC,-2.25,1.0,-0.5082272824769994
+reversal_perseveration,Inversion : persévération,Mann-Whitney (Holm),EC sans espace,IC,1.25,1.0,0.1953328801931516

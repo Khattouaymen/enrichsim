@@ -1,0 +1,177 @@
+{
+  "design": "dose",
+  "description": "Relation dose-réponse de l'enrichissement",
+  "groups": [
+    {
+      "name": "E0.00",
+      "factors": {
+        "level": 0.0
+      },
+      "phases": [
+        {
+          "env": {
+            "name": "E0.00",
+            "size": 6,
+            "n_objects": 0,
+            "object_pool": 0,
+            "novelty_period": 0,
+            "n_conspecifics": 0,
+            "inner_walls": 0,
+            "food_density": 0.04
+          },
+          "steps": 20000
+        }
+      ]
+    },
+    {
+      "name": "E0.25",
+      "factors": {
+        "level": 0.25
+      },
+      "phases": [
+        {
+          "env": {
+            "name": "E0.25",
+            "size": 8,
+            "n_objects": 2,
+            "object_pool": 10,
+            "novelty_period": 1600,
+            "n_conspecifics": 1,
+            "inner_walls": 2,
+            "food_density": 0.04
+          },
+          "steps": 20000
+        }
+      ]
+    },
+    {
+      "name": "E0.50",
+      "factors": {
+        "level": 0.5
+      },
+      "phases": [
+        {
+          "env": {
+            "name": "E0.50",
+            "size": 11,
+            "n_objects": 5,
+            "object_pool": 20,
+            "novelty_period": 1200,
+            "n_conspecifics": 2,
+            "inner_walls": 3,
+            "food_density": 0.04
+          },
+          "steps": 20000
+        }
+      ]
+    },
+    {
+      "name": "E0.75",
+      "factors": {
+        "level": 0.75
+      },
+      "phases": [
+        {
+          "env": {
+            "name": "E0.75",
+            "size": 14,
+            "n_objects": 8,
+            "object_pool": 30,
+            "novelty_period": 800,
+            "n_conspecifics": 3,
+            "inner_walls": 4,
+            "food_density": 0.04
+          },
+          "steps": 20000
+        }
+      ]
+    },
+    {
+      "name": "E1.00",
+      "factors": {
+        "level": 1.0
+      },
+      "phases": [
+        {
+          "env": {
+            "name": "E1.00",
+            "size": 16,
+            "n_objects": 10,
+            "object_pool": 40,
+            "novelty_period": 400,
+            "n_conspecifics": 4,
+            "inner_walls": 6,
+            "food_density": 0.04
+          },
+          "steps": 20000
+        }
+      ]
+    }
+  ],
+  "n_subjects_per_group": 20,
+  "development_steps": 20000,
+  "seed": 2027,
+  "brain": {
+    "view_radius": 2,
+    "object_features": 6,
+    "place_cells": 4,
+    "n_initial": 64,
+    "n_max": 112,
+    "initial_density": 0.35,
+    "max_fan_in": 120,
+    "lr_actor": 0.1,
+    "lr_critic": 0.1,
+    "lr_body": 0.02,
+    "lr_forward": 0.2,
+    "gamma": 0.95,
+    "trace_lambda": 0.8,
+    "entropy_coef": 0.03,
+    "motor_persistence": 1.0,
+    "curiosity_coef": 0.1,
+    "memory_size": 400,
+    "object_memory_size": 60,
+    "habituation_rate": 0.25,
+    "investigation": 2.0,
+    "weight_decay": 2e-05,
+    "replay_passes": 3,
+    "sleep_replay": 300,
+    "replay_enabled": false,
+    "replay_actor": true,
+    "structural_period": 250,
+    "coact_tau": 0.002,
+    "prune_threshold": 0.02,
+    "prune_prob": 0.5,
+    "prune_prob_used": 0.05,
+    "pre_threshold": 0.003,
+    "grow_rate": 0.02,
+    "neurogenesis_rate": 0.5,
+    "novelty_threshold": 1.15,
+    "silent_threshold": 0.01,
+    "target_rate": 0.15,
+    "homeostasis": 0.05,
+    "min_neurons": 16,
+    "critical_period": false,
+    "plasticity_tau": 15000.0,
+    "plasticity_floor": 0.25
+  },
+  "tests": {
+    "open_field_steps": 300,
+    "nor_sessions": 4,
+    "nor_familiarization": 150,
+    "nor_test": 200,
+    "maze_trials": 8,
+    "maze_max_steps": 200,
+    "maze_problems": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "reversal_trials": 8
+  },
+  "enrichsim_version": "1.0.0",
+  "python": "3.13.16",
+  "numpy": "2.5.3",
+  "date": "2026-10-12T22:35:26",
+  "duration_s": 404.7
+}

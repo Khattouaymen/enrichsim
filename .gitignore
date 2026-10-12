@@ -2,7 +2,8 @@ __pycache__/
 *.pyc
 .pytest_cache/
 # données générées (se régénèrent avec python -m enrichsim run ...)
-results/
+results/*/brains/
+!results/
 pilot/
 test_rapide/
 *.log
