@@ -167,11 +167,12 @@
       2,
       3
     ],
-    "reversal_trials": 8
+    "reversal_trials": 8,
+    "freeze_structure": false
   },
   "enrichsim_version": "1.0.0",
   "python": "3.13.16",
   "numpy": "2.5.3",
-  "date": "2026-10-12T22:35:26",
-  "duration_s": 404.7
+  "date": "2026-10-13T10:17:10",
+  "duration_s": 398.5
 }
