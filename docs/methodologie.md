@@ -34,7 +34,7 @@ les effets observés, pas une preuve de ce qui se passe chez le rat.
 | Cage d'élevage IC / SC / EC | Grille paramétrée : taille, objets, renouvellement, congénères, cloisons | `config.py`, `environment.py` |
 | Perception (vision, vibrisses) | Voisinage local 5 × 5 : murs, nourriture, congénères, traits sensoriels des objets | `environment.py` |
 | Cellules de lieu (hippocampe) | 16 cellules à champ gaussien ; carte différente pour chaque lieu (*remapping*, Muller & Kubie, 1987) | `environment.py` |
-| Cortex | Couche de 64 à 112 neurones (ReLU saturante) | `brain.py` |
+| Cortex | Couche de neurones (ReLU saturante) : 64 à la naissance, 112 au maximum | `brain.py` |
 | Apprentissage par la récompense, dopamine | Acteur-critique ; l'erreur de prédiction de récompense δ joue le rôle du signal dopaminergique ; traces d'éligibilité | `brain.py` |
 | Cerveau prédictif | Le cortex apprend à prédire la sensation suivante ; l'erreur de prédiction mesure la surprise | `brain.py` |
 | Curiosité / exploration | Récompense intrinsèque = nouveauté de la situation par rapport à la mémoire récente | `brain.py` |
@@ -61,9 +61,11 @@ les effets observés, pas une preuve de ce qui se passe chez le rat.
 | Séparation de patterns | Capacité à distinguer deux objets proches (gyrus denté ; Yassa & Stark, 2011) |
 | Indice de discrimination **neuronal** (NOR) | Différence de réponse corticale objet nouveau / familier (analogue de l'imagerie ou de l'électrophysiologie) |
 
-Les mesures représentationnelles sont calculées sur un **jeu de stimuli de référence
+Les mesures anatomiques et représentationnelles sont prises **en fin d'élevage, avant les
+tests**. Les mesures représentationnelles sont calculées sur un **jeu de stimuli de référence
 identique pour tous les sujets**, composé d'objets jamais vus pendant l'élevage, afin de ne
-favoriser aucune condition.
+favoriser aucune condition. Seul l'indice de discrimination neuronal est mesuré pendant le test
+de reconnaissance d'objet, à partir des réponses du cortex aux deux objets.
 
 ### Batterie comportementale
 
@@ -78,9 +80,16 @@ Ordre fixe, du moins au plus exigeant, dans des arènes qu'aucun groupe n'a vues
    totale est inférieure à 5 contacts (critère usuel d'exclusion).
 3. **Labyrinthe de Hebb-Williams** (Hebb & Williams, 1946 ; Rabinovitch & Rosvold, 1951) : quatre
    problèmes, huit essais chacun ; une erreur = un déplacement qui n'approche pas du but.
-   Mesures : erreurs, latence, essais jusqu'au critère (≤ 2 erreurs).
+   Mesures : erreurs, latence, essais jusqu'au critère (≤ 2 erreurs). Six repères visuels (des
+   objets encastrés dans les murs) aident à reconnaître les lieux.
 4. **Apprentissage inversé** : le but du premier problème change de place ; erreurs et
    persévération (visites de l'ancien but) mesurent la flexibilité cognitive.
+
+**Le cerveau continue d'apprendre pendant les tests**, comme l'animal. Dans le protocole
+principal, sa structure continue aussi de changer (synapses, neurones). Or la batterie dure en
+moyenne environ 5 800 étapes, soit près de 30 % de la durée de l'élevage, alors que chez le rat
+les tests sont courts par rapport à des semaines d'hébergement. L'état du cerveau est donc
+mesuré avant la batterie puis après chaque test (`test_development.csv`) ; voir la section 6.
 
 ## 3. Hypothèses (formulées avant l'expérience finale)
 
@@ -111,7 +120,8 @@ de l'élevage ; plasticité décroissante avec l'âge)
 ## 4. Plan expérimental
 
 - **Facteur** : environnement d'élevage (inter-sujets).
-- **Effectif** : 20 sujets par groupe ; 360 sujets au total pour les quatre expériences.
+- **Effectif** : 20 sujets par groupe ; 360 sujets au total pour les quatre expériences, plus 60
+  pour l'expérience de contrôle (section 6).
 - **Durée d'élevage** : 20 000 étapes (une étape = un déplacement).
 - **Plan apparié (« split-litter »)** : le sujet n° i de chaque groupe démarre avec exactement le
   même cerveau initial (même graine aléatoire), comme des petits d'une même portée répartis
@@ -120,7 +130,10 @@ de l'élevage ; plasticité décroissante avec l'âge)
 - **Graine de l'expérience finale : 2027**, différente des graines utilisées pendant les pilotes
   (2026). Les résultats rapportés sont donc indépendants des données ayant servi au calibrage.
 - **Reproductibilité** : `metadata.json` enregistre tous les paramètres, les versions de Python et
-  de NumPy et la graine ; la même commande produit exactement les mêmes données.
+  de NumPy et la graine ; la même commande produit exactement les mêmes données. L'expérience
+  finale a d'ailleurs été relancée une seconde fois avec le code définitif : les données des
+  quatre expériences sont identiques à la première exécution (vérification automatique, valeur
+  par valeur).
 
 ```bash
 pip install -r requirements.txt
@@ -155,12 +168,48 @@ finale (voir l'historique git).
 10. **Ablation** : test de Dunnett (chaque groupe vs EC) et « part de l'effet perdue »
     = (EC − groupe) / (EC − IC), calculée seulement quand EC diffère significativement de IC.
 11. **NOR** : test t à un échantillon de l'indice de discrimination contre 0 dans chaque groupe.
+    Attention : qu'un groupe soit significatif et un autre non ne prouve pas que les groupes
+    diffèrent (Gelman & Stern, 2006). Seule la comparaison directe des groupes (point 3)
+    permet de conclure à une différence.
+12. **Valeurs de *p* et simulation** : dans une simulation, on peut rendre un *p* aussi petit qu'on
+    veut en ajoutant des sujets. Les tailles d'effet et la forme des résultats comptent donc
+    davantage que les seuils de significativité.
 
 Les résultats sont présentés au format APA 7 : *F*(2, 57) = 3,95, *p* = ,025, η² = ,12.
 *(Le rapport automatique utilise le point décimal ; le remplacer par la virgule dans le mémoire
 si la norme de l'université l'exige.)*
 
-## 6. Phase de calibrage exploratoire — à déclarer
+## 6. Analyse complémentaire exploratoire — décidée après l'expérience finale
+
+**Constat.** En examinant les cerveaux enregistrés, on a constaté après l'expérience finale que
+la plasticité structurelle, restée active pendant les tests, rapproche fortement les cerveaux
+des différents groupes : les tests (objets du test de reconnaissance, repères des labyrinthes)
+« ré-enrichissent » les cerveaux IC, et les cerveaux EC perdent une partie de leurs synapses. Les
+derniers tests (labyrinthe, inversion) comparent donc des cerveaux devenus plus semblables
+qu'en fin d'élevage. Ce point n'avait pas été anticipé.
+
+**Mesure.** L'état du cerveau est mesuré avant la batterie de tests puis après chaque test. On
+calcule à chaque étape l'effet du groupe (η²) sur le nombre de synapses, le territoire
+« objets », le nombre de neurones et la séparation de patterns.
+
+**Expérience de contrôle (plan `control`).** Mêmes sujets, mêmes graines et donc même élevage que
+l'expérience 1 : les cerveaux sont identiques en fin d'élevage (vérifié automatiquement). Seule
+différence : pendant les tests, l'architecture du cerveau est figée (aucune synapse ni aucun
+neurone n'apparaît ou ne disparaît). L'apprentissage des poids synaptiques, l'oubli passif et
+l'homéostasie continuent.
+
+**Analyses.** Pour chaque mesure prise pendant les tests :
+- effet du groupe dans chaque protocole (η²) ;
+- effet du protocole (architecture figée − plastique) : test *t* apparié, tous sujets confondus ;
+- interaction groupe × protocole : comparaison des groupes sur la différence entre protocoles
+  (avec deux protocoles mesurés sur les mêmes sujets, c'est le test de l'interaction), test
+  choisi comme en section 5, *p* corrigés de Holm.
+
+Ces analyses ont été décidées **après** avoir vu les résultats de l'expérience finale : elles
+sont exploratoires et doivent être présentées comme telles. Le code d'analyse a été écrit et
+commité avant de disposer des résultats de l'expérience de contrôle.
+
+## 7. Phase de calibrage exploratoire — à déclarer
 
 Avant l'expérience finale, le modèle a été mis au point sur des **pilotes** (graine 2026). Par
 transparence, le mémoire doit indiquer que les modifications suivantes ont été faites au vu
@@ -185,7 +234,7 @@ Après ces changements, **tous les paramètres ont été figés** ; l'expérienc
 nouvelle graine. Les pilotes doivent être décrits comme exploratoires et leurs résultats ne
 doivent pas être additionnés à ceux de l'expérience finale.
 
-## 7. Limites
+## 8. Limites
 
 - **Raisonnement en partie circulaire sur l'anatomie.** La règle « use it or lose it » élague
   les synapses dont l'entrée est silencieuse. Dans IC, les entrées « objets » ne sont jamais
@@ -200,7 +249,14 @@ doivent pas être additionnés à ceux de l'expérience finale.
   résultat en soi, à discuter : (a) la littérature animale rapporte aussi des effets
   comportementaux plus modestes et variables ; (b) le modèle est très petit (≈ 100 neurones) et
   les tâches sont courtes ; (c) une « plus grande » structure n'est pas automatiquement une
-  structure mieux utilisée.
+  structure mieux utilisée ; (d) la plasticité restée active pendant les tests rapproche les
+  cerveaux des groupes (section 6).
+- **Plasticité pendant les tests.** La batterie de tests est longue (≈ 30 % de la durée de
+  l'élevage) et modifie le cerveau. Les mesures anatomiques sont prises avant les tests, mais les
+  derniers tests évaluent des cerveaux déjà transformés par les premiers.
+- **Sujets partagés.** Les groupes EC et IC des expériences 1 et 4 sont les mêmes sujets simulés,
+  et l'expérience de contrôle reprend exactement l'élevage de l'expérience 1 : ce ne sont pas des
+  réplications indépendantes.
 - **Simplicité du modèle** : pas de neurotransmetteurs distincts, pas d'hormones (stress de
   l'isolement), pas d'interactions sociales réelles (les congénères bougent au hasard), pas de
   sommeil.
@@ -209,13 +265,14 @@ doivent pas être additionnés à ceux de l'expérience finale.
 - **Paramètres libres** : de nombreux paramètres ont été fixés à des valeurs raisonnables sans
   ajustement systématique ; une analyse de sensibilité serait une extension utile.
 
-## 8. Références
+## 9. Références
 
 - Brown, M. W., & Aggleton, J. P. (2001). Recognition memory: What are the roles of the perirhinal cortex and hippocampus? *Nature Reviews Neuroscience, 2*(1), 51-61.
 - Dember, W. N., & Fowler, H. (1958). Spontaneous alternation behavior. *Psychological Bulletin, 55*(6), 412-428.
 - Diamond, M. C., Krech, D., & Rosenzweig, M. R. (1964). The effects of an enriched environment on the histology of the rat cerebral cortex. *Journal of Comparative Neurology, 123*(1), 111-119.
 - Ennaceur, A., & Delacour, J. (1988). A new one-trial test for neurobiological studies of memory in rats. *Behavioural Brain Research, 31*(1), 47-59.
 - Gao, P., & Ganguli, S. (2015). On simplicity and complexity in the brave new world of large-scale neuroscience. *Current Opinion in Neurobiology, 32*, 148-155.
+- Gelman, A., & Stern, H. (2006). The difference between "significant" and "not significant" is not itself statistically significant. *The American Statistician, 60*(4), 328-331.
 - Hall, C. S. (1934). Emotional behavior in the rat. *Journal of Comparative Psychology, 18*(3), 385-403.
 - Hebb, D. O. (1949). *The organization of behavior*. Wiley.
 - Hebb, D. O., & Williams, K. (1946). A method of rating animal intelligence. *Journal of General Psychology, 34*(1), 59-65.
