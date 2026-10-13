@@ -1,0 +1,9 @@
+group object  contacts  nouveaute  part_plafond  bonus
+   EC    fam       174      0.010         0.000  0.389
+   EC    nov       245      0.028         0.020  1.082
+   IC    fam       186      0.012         0.000  0.471
+   IC    nov       235      0.020         0.021  0.723
+contacts par session de test : 13.1
+contacts par sujet (4 sessions) : 52.5
+écart-type de l'indice dû au seul échantillonnage : 0.137
+indices de discrimination recalculés identiques à results/main/subjects.csv : oui
