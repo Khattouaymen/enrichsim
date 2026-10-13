@@ -9,6 +9,8 @@ from enrichsim.environment import MAZES, REVERSAL_GOAL, HomeCage, Maze, obs_dim
 from enrichsim.experiment import run_experiment
 from enrichsim.metrics import brain_metrics
 from enrichsim.subject import Subject
+from enrichsim.tasks import TEST_STAGES
+from enrichsim.tasks import test_battery as run_battery
 
 CFG = BrainConfig()
 FAST_TESTS = BatteryConfig(open_field_steps=50, nor_sessions=1, nor_familiarization=30, nor_test=40,
@@ -100,11 +102,73 @@ def test_full_pipeline_small(tmp_path):
             ("brain_food_rate", "brain_touch_rate", "brain_distinct_objects", "brain_exploration",
              "brain_prediction_error")]
     assert not df[anat].isna().any().any()
-    for f in ("development.csv", "learning_curves.csv", "metadata.json"):
+    for f in ("development.csv", "learning_curves.csv", "test_development.csv", "metadata.json"):
         assert (out / f).exists()
-    assert list((out / "brains").glob("*.npz"))
+    # cerveaux enregistrés en fin d'élevage ET après les tests
+    for g in ("IC", "SC", "EC"):
+        end = np.load(out / "brains" / f"{g}_s0.npz")
+        post = np.load(out / "brains" / f"{g}_s0_apres_tests.npz")
+        assert str(end["stage"]) == "fin d'élevage" and str(post["stage"]) == "après les tests"
+        row = df[(df.group == g) & (df.subject == 0)].iloc[0]
+        assert int(end["M"][end["alive"]].sum()) == row.brain_n_synapses
 
     from enrichsim.report import build_report
     path = build_report(out)
     text = path.read_text(encoding="utf-8")
     assert "<html" in text and "Méthode" in text
+
+
+def test_state_is_a_copy():
+    s, _ = _develop(5, steps=300)
+    snap = s.brain.state()
+    s.brain.W1[:] = 0.0
+    assert np.any(snap["W1"] != 0.0)
+
+
+LONG_TESTS = BatteryConfig(open_field_steps=600, nor_sessions=1, nor_familiarization=30, nor_test=40,
+                           maze_trials=2, maze_max_steps=40, maze_problems=(0,), reversal_trials=1)
+
+
+@pytest.mark.parametrize("freeze", [True, False])
+def test_freeze_structure_during_tests(freeze):
+    """Architecture figée pendant les tests si demandé ; elle change sinon (plasticité active)."""
+    s, _ = _develop(11, EC, steps=600)
+    M0, alive0 = s.brain.M.copy(), s.brain.alive.copy()
+    W0 = s.brain.W1.copy()
+    cfg = BatteryConfig(**{**LONG_TESTS.__dict__, "freeze_structure": freeze})
+    _, _, stages = run_battery(s, cfg)
+    assert [st["stage_label"] for st in stages] == TEST_STAGES
+    if freeze:
+        np.testing.assert_array_equal(s.brain.M, M0)
+        np.testing.assert_array_equal(s.brain.alive, alive0)
+        assert len({st["n_synapses"] for st in stages}) == 1
+        assert not np.array_equal(s.brain.W1, W0), "les poids continuent d'apprendre"
+    else:
+        assert not np.array_equal(s.brain.M, M0)
+    assert s.brain.structure_frozen is False, "le gel ne doit pas survivre à la batterie de tests"
+
+
+def test_stage_zero_is_end_of_rearing():
+    s, traj = _develop(13, IC, steps=600)
+    _, _, stages = run_battery(s, FAST_TESTS)
+    assert stages[0]["n_synapses"] == traj[-1]["n_synapses"]
+    assert stages[0]["pattern_separation"] == pytest.approx(traj[-1]["pattern_separation"])
+
+
+def test_control_design_same_rearing(tmp_path):
+    """Le plan de contrôle reprend exactement l'élevage du plan principal (mêmes graines)."""
+    kw = dict(n_subjects=2, steps=300, workers=1, seed=3, tests=FAST_TESTS, log_every=150)
+    a = pd.read_csv(run_experiment("main", out_dir=tmp_path / "main", **kw) / "subjects.csv")
+    out = run_experiment("control", out_dir=tmp_path / "control", **kw)
+    b = pd.read_csv(out / "subjects.csv")
+    anat = [c for c in a.columns if c.startswith("brain_")]
+    pd.testing.assert_frame_equal(a[anat], b[anat])
+    import json
+    assert json.loads((out / "metadata.json").read_text(encoding="utf-8"))["tests"]["freeze_structure"]
+    st = pd.read_csv(out / "test_development.csv")
+    assert (st.groupby(["group", "subject"])["n_synapses"].nunique() == 1).all()
+
+    from enrichsim.stats import analyze
+    r = analyze(out, save=False)
+    assert r["same_rearing"] is True
+    assert not r["vs_main"].empty

@@ -129,6 +129,29 @@ def development_figure(dev: pd.DataFrame, order: list[str], colors: dict[str, st
     return fig_to_html(fig, "Trajectoires développementales")
 
 
+STAGE_FIG_VARS = {"n_synapses": "Synapses", "coverage_objects": "Territoire « objets »"}
+
+
+def test_stage_figure(stages: pd.DataFrame, order: list[str], colors: dict[str, str]) -> str:
+    """Anatomie avant la batterie de tests puis après chaque test (moyenne et IC 95 %)."""
+    labels = stages.drop_duplicates("stage").sort_values("stage")["stage_label"].tolist()
+    fig, axes = plt.subplots(1, len(STAGE_FIG_VARS), figsize=(5 * len(STAGE_FIG_VARS), 3.3), squeeze=False)
+    for ax, (v, title) in zip(axes.ravel(), STAGE_FIG_VARS.items()):
+        for g in order:
+            dg = stages[stages.group == g].groupby("stage")[v]
+            m, se = dg.mean(), dg.sem()
+            ax.plot(m.index, m.values, color=colors[g], label=g, marker="o", ms=4, mec="white", mew=1)
+            ax.fill_between(m.index, m - 1.96 * se, m + 1.96 * se, color=colors[g], alpha=0.10, lw=0)
+        ax.set_title(title, loc="left")
+        ax.set_xticks(range(len(labels)))
+        ax.set_xticklabels(["avant les tests"] + [f"après : {lab}" for lab in labels[1:]],
+                           rotation=25, ha="right")
+        ax.grid(axis="x", visible=False)
+    axes.ravel()[0].legend(fontsize=8, ncol=1 if len(order) < 5 else 2)
+    fig.tight_layout()
+    return fig_to_html(fig, "Anatomie du cerveau pendant la batterie de tests")
+
+
 def dose_figure(df: pd.DataFrame, variables: list[str]) -> str:
     fig, axes = plt.subplots(1, len(variables), figsize=(3.2 * len(variables), 2.8), squeeze=False)
     for ax, v in zip(axes.ravel(), variables):
@@ -330,7 +353,9 @@ def build_report(folder: str | Path) -> Path:
     add(f"<h1>EnrichSim — {html.escape(meta['description'])}</h1>")
     add('<p class="sub">Rapport généré automatiquement. Données simulées : il ne s\'agit pas '
         "d'une étude sur l'animal, mais d'un modèle computationnel dont les paramètres ont été "
-        "fixés avant l'expérience.</p>")
+        "fixés avant l'expérience."
+        + (" Plan de contrôle exploratoire, ajouté après l'expérience finale." if design == "control" else "")
+        + "</p>")
     add('<div class="meta">'
         f"<div><span>Plan</span>{html.escape(design)}</div>"
         f"<div><span>Groupes</span>{len(order)}</div>"
@@ -459,13 +484,65 @@ def build_report(folder: str | Path) -> Path:
             + ".</figcaption></figure>")
         sec += 1
 
+    # ---------------------------------------------------------------- le cerveau pendant les tests
+    st_path = folder / "test_development.csv"
+    frozen = bool(meta.get("tests", {}).get("freeze_structure"))
+    if st_path.exists() and "test_stages" in R:
+        stages = pd.read_csv(st_path)
+        add(f"<h2>{sec}. Le cerveau pendant la batterie de tests</h2>")
+        if frozen:
+            add('<p class="note">Dans ce plan, l\'architecture du cerveau (synapses, neurones) est figée '
+                "pendant les tests : l'anatomie doit rester constante (contrôle de la manipulation). "
+                "L'apprentissage des poids synaptiques continue.</p>")
+        else:
+            add('<p class="note">La plasticité structurelle reste active pendant les tests : la batterie '
+                "dure plusieurs milliers d'étapes et continue de modifier le cerveau. Une baisse de η² au "
+                "fil des tests signifie que les groupes se ressemblent de plus en plus.</p>")
+        add(f"<figure>{test_stage_figure(stages, order, colors)}<figcaption>Figure {sec}. Mesures avant la "
+            "batterie de tests puis après chaque test (moyenne et IC 95 %).</figcaption></figure>")
+        ts = R["test_stages"]
+        ts = ts[ts.variable.isin(list(STAGE_FIG_VARS) + ["n_neurons", "pattern_separation"])]
+        wide = ts.pivot_table(index="label", columns="stage", values="eta2", sort=False)
+        names = dict(zip(ts.stage, ts.stage_label))
+        wide.columns = ["avant les tests" if c == 0 else f"après : {names[c]}" for c in wide.columns]
+        wide = wide.reset_index().rename(columns={"label": "Mesure (η² du groupe)"})
+        add(table(wide, {c: c for c in wide.columns}, {c: (lambda x: S.fmt_num(x, 2, lead_zero=False))
+                                                       for c in wide.columns[1:]}))
+        sec += 1
+
+    # ---------------------------------------------------------------- contrôle vs protocole principal
+    vs = R.get("vs_main")
+    if vs is not None and not vs.empty:
+        add(f"<h2>{sec}. Comparaison avec le protocole principal (analyse exploratoire)</h2>")
+        same = R.get("same_rearing")
+        add('<p class="note">Mêmes sujets que l\'expérience principale (même graine) : seul change le '
+            "protocole de test. Élevage identique dans les deux fichiers : "
+            f"<b>{'oui' if same else 'NON — comparaison non valide'}</b>. Effet du protocole : test t "
+            "apparié sur la différence (architecture figée − plastique). Interaction groupe × protocole : "
+            "comparaison des groupes sur cette différence. Analyse décidée après l'expérience finale : "
+            "à présenter comme exploratoire.</p>")
+        vt = vs.assign(sig=vs.inter_p_holm.map(sig))
+        add(table(vt, {"label": "Variable", "eta2_base": "η² groupe (plastique)",
+                       "eta2_other": "η² groupe (figé)", "mean_diff": "Diff. moyenne (figé − plastique)",
+                       "apa_protocol": "Effet du protocole", "inter_apa": "Interaction groupe × protocole",
+                       "inter_p_holm": "p interaction (Holm)", "sig": ""},
+                  {"eta2_base": lambda x: S.fmt_num(x, 2, lead_zero=False),
+                   "eta2_other": lambda x: S.fmt_num(x, 2, lead_zero=False),
+                   "mean_diff": lambda x: S.fmt_num(x, 3), "inter_p_holm": pfmt}))
+        sec += 1
+
     add(f"<h2>{sec}. Précautions d'interprétation</h2>")
     add("<ul><li>Il s'agit d'une simulation : les « sujets » sont des réseaux de neurones artificiels "
         "et les résultats ne se généralisent pas directement à l'animal ou à l'humain.</li>"
         "<li>La règle de plasticité « use it or lose it » (élagage des synapses dont l'entrée est "
-        "silencieuse) rend une partie de l'effet anatomique attendue par construction. Les effets "
-        "comportementaux et représentationnels ne sont pas imposés par cette règle.</li>"
-        "<li>Les paramètres du modèle ont été calibrés lors d'une phase exploratoire (pilotes, graine "
+        "silencieuse) rend une partie de l'effet anatomique attendue par construction. Le transfert "
+        "vers le comportement, lui, n'est pas imposé par cette règle.</li>"
+        + ("<li>L'architecture est figée pendant les tests dans ce plan de contrôle, ajouté après "
+           "l'expérience finale : ses résultats sont exploratoires.</li>" if frozen else
+           "<li>La plasticité reste active pendant les tests, qui durent plusieurs milliers d'étapes : "
+           "les tests passés en dernier (labyrinthe, inversion) évaluent des cerveaux déjà modifiés par "
+           "les tests précédents.</li>")
+        + "<li>Les paramètres du modèle ont été calibrés lors d'une phase exploratoire (pilotes, graine "
         "2026) puis figés ; l'expérience rapportée ici utilise une graine différente.</li>"
         "<li>Avec un grand nombre de variables, des résultats isolés peuvent être des faux positifs : "
         "se fier aux p corrigés (Holm) et aux tailles d'effet.</li></ul>")

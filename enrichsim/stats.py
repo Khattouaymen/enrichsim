@@ -16,6 +16,14 @@ Le plan d'analyse est fixé AVANT l'exécution finale (graine 2027) :
 * période critique : ANOVA 2 x 2 (précoce x tardif) de type II, η² partiel ;
 * ablation : test de Dunnett, chaque groupe comparé à EC.
 
+Analyses exploratoires ajoutées APRÈS l'expérience finale (à présenter comme telles) :
+
+* état du cerveau pendant la batterie de tests : η² du groupe avant les tests puis après
+  chaque test (`test_stage_effects`) ;
+* plan de contrôle (architecture figée pendant les tests) : comparaison avec le protocole
+  principal sur les mêmes sujets — effet du protocole et interaction groupe × protocole
+  (`compare_protocols`).
+
 Remarque sur le plan apparié : le sujet n°i de chaque groupe démarre avec le même cerveau
 initial. L'analyse principale traite pourtant les groupes comme indépendants (comme dans les
 études animales) ; c'est conservateur. Une analyse complémentaire (Friedman) exploite
@@ -510,6 +518,77 @@ def analyze_ablation(df: pd.DataFrame, variables: list[str], control: str = "EC"
 
 # =========================================================================== point d'entrée
 
+# =========================================================================== le cerveau pendant les tests
+
+STAGE_VARS = ["n_synapses", "n_neurons", "fan_in_mean", "coverage_objects",
+              "pattern_separation", "object_sensitivity"]
+
+
+def test_stage_effects(stages: pd.DataFrame, order: list[str],
+                       variables: list[str] = STAGE_VARS) -> pd.DataFrame:
+    """Effet du groupe (η²) sur l'anatomie avant la batterie de tests puis après chaque test.
+
+    Une baisse de η² au fil des tests signifie que les cerveaux des différents groupes se
+    rapprochent : les tests eux-mêmes modifient le cerveau."""
+    rows = []
+    for (k, lab), d in stages.groupby(["stage", "stage_label"], sort=True):
+        for v in variables:
+            if v not in d:
+                continue
+            samples = [_clean(d.loc[d.group == g, v]) for g in order]
+            if any(len(x) < 2 for x in samples):
+                continue
+            eta2 = anova_effect_sizes(samples)[0] if np.ptp(np.concatenate(samples)) > 0 else np.nan
+            rows.append({"stage": k, "stage_label": lab, "variable": v, "label": label(f"brain_{v}"),
+                         "eta2": eta2, **{f"M_{g}": x.mean() for g, x in zip(order, samples)}})
+    return pd.DataFrame(rows)
+
+
+def compare_protocols(base: pd.DataFrame, other: pd.DataFrame, variables: list[str],
+                      order: list[str]) -> tuple[pd.DataFrame, bool]:
+    """Compare deux protocoles de test appliqués aux MÊMES sujets (même élevage).
+
+    Pour chaque variable : effet du groupe dans chaque protocole (η²) ; effet du protocole
+    (test t apparié, tous sujets confondus) ; interaction groupe × protocole. Avec un facteur
+    intra-sujet à deux modalités, l'interaction se teste en comparant les groupes sur la
+    différence (autre − base) ; le test est choisi comme ailleurs (ANOVA, Welch ou
+    Kruskal-Wallis). Retourne aussi un booléen : l'élevage est-il identique dans les deux
+    fichiers (même anatomie en fin d'élevage pour chaque sujet) ?"""
+    key = ["group", "subject"]
+    m = base.merge(other, on=key, suffixes=("_a", "_b"))
+    anat = [c for c in base.columns if c.startswith("brain_") and c in other.columns]
+    same_rearing = bool(len(m) == len(base) == len(other) and all(
+        np.allclose(m[f"{c}_a"], m[f"{c}_b"], equal_nan=True) for c in anat))
+    rows = []
+    for v in variables:
+        if f"{v}_a" not in m or f"{v}_b" not in m:
+            continue
+        d = pd.DataFrame({"group": m["group"], "subject": m["subject"], v: m[f"{v}_b"] - m[f"{v}_a"]})
+        diff = _clean(d[v])
+        if len(diff) < 3:
+            continue
+        eta_a = anova_effect_sizes([_clean(m.loc[m.group == g, f"{v}_a"]) for g in order])[0]
+        eta_b = anova_effect_sizes([_clean(m.loc[m.group == g, f"{v}_b"]) for g in order])[0]
+        sd = diff.std(ddof=1)
+        t, p = stats.ttest_1samp(diff, 0.0) if sd > 0 else (np.nan, np.nan)
+        inter = compare_groups(d, v, order=order, paired_by=None)
+        rows.append({
+            "variable": v, "label": label(v), "family": VARIABLES.get(v, ("", "autre"))[1],
+            "eta2_base": eta_a, "eta2_other": eta_b, "mean_diff": diff.mean(),
+            "t_protocol": float(t), "df_protocol": len(diff) - 1, "p_protocol": float(p),
+            "dz_protocol": diff.mean() / sd if sd > 0 else np.nan,
+            "apa_protocol": f"t({len(diff) - 1}) = {fmt_num(float(t))}, {fmt_p(float(p))}",
+            "inter_test": inter.test if inter else "", "inter_p": inter.p if inter else np.nan,
+            "inter_apa": inter.apa() if inter else "n.d.",
+        })
+    out = pd.DataFrame(rows)
+    if not out.empty:
+        for fam, idx in out.groupby("family").groups.items():
+            out.loc[idx, "inter_p_holm"] = holm(out.loc[idx, "inter_p"])
+            out.loc[idx, "p_protocol_holm"] = holm(out.loc[idx, "p_protocol"])
+    return out, same_rearing
+
+
 def _order(df: pd.DataFrame, meta: dict) -> list[str]:
     names = [g["name"] for g in meta.get("groups", [])]
     present = list(dict.fromkeys(df["group"]))
@@ -546,6 +625,21 @@ def analyze(folder: str | Path, save: bool = True) -> dict:
         out["timing"] = analyze_timing(df, allv)
     if design == "ablation":
         out["ablation"] = analyze_ablation(df, allv)
+
+    stages_path = folder / "test_development.csv"
+    if stages_path.exists():
+        out["test_stages"] = test_stage_effects(pd.read_csv(stages_path), order)
+
+    # plan de contrôle : comparaison avec le protocole principal, sur les mêmes sujets
+    ref = folder.parent / "main"
+    if design == "control" and (ref / "subjects.csv").exists():
+        ref_meta = json.loads((ref / "metadata.json").read_text(encoding="utf-8"))
+        same_plan = all(ref_meta.get(k) == meta.get(k)
+                        for k in ("seed", "n_subjects_per_group", "development_steps"))
+        if same_plan:
+            measured_in_tests = behav + [v for v in ("nor_neural_di",) if v in df]
+            out["vs_main"], out["same_rearing"] = compare_protocols(
+                pd.read_csv(ref / "subjects.csv"), df, measured_in_tests, order)
 
     if save:
         sd = folder / "stats"

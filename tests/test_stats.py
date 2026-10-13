@@ -110,3 +110,29 @@ def test_mixed_model_detects_slope_difference():
                              "errors": 20 + u + slope * t + rng.normal(0, 1)})
     m = S.learning_mixed_model(pd.DataFrame(rows), order=["IC", "EC"])
     assert m["wald_p"] < 0.001
+
+
+def test_compare_protocols_detects_interaction():
+    """Le protocole B améliore le score du seul groupe EC : interaction groupe x protocole."""
+    rng = np.random.default_rng(0)
+    rows_a, rows_b = [], []
+    for g in ("IC", "SC", "EC"):
+        for i in range(25):
+            base = rng.normal(0, 1)
+            common = {"group": g, "subject": i, "brain_n_synapses": 100 + i}
+            rows_a.append({**common, "maze_errors": base})
+            rows_b.append({**common, "maze_errors": base + (3.0 if g == "EC" else 0.0) + rng.normal(0, 0.3)})
+    out, same = S.compare_protocols(pd.DataFrame(rows_a), pd.DataFrame(rows_b), ["maze_errors"],
+                                    ["IC", "SC", "EC"])
+    assert same is True
+    r = out.iloc[0]
+    assert r.inter_p < 0.001
+    assert r.mean_diff == pytest.approx(1.0, abs=0.2)
+
+
+def test_compare_protocols_flags_different_rearing():
+    a = pd.DataFrame({"group": ["IC", "EC"] * 3, "subject": [0, 0, 1, 1, 2, 2],
+                      "brain_n_synapses": [1, 2, 3, 4, 5, 6], "maze_errors": [1.0, 2, 3, 4, 5, 6]})
+    b = a.assign(brain_n_synapses=a.brain_n_synapses + 1)
+    _, same = S.compare_protocols(a, b, ["maze_errors"], ["IC", "EC"])
+    assert same is False

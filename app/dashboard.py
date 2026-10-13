@@ -72,7 +72,9 @@ def load(folder: str, mtime: float):
     meta = json.loads((f / "metadata.json").read_text(encoding="utf-8"))
     dev = pd.read_csv(f / "development.csv") if (f / "development.csv").exists() else pd.DataFrame()
     curves = pd.read_csv(f / "learning_curves.csv") if (f / "learning_curves.csv").exists() else pd.DataFrame()
-    return df, meta, dev, curves
+    stages = (pd.read_csv(f / "test_development.csv") if (f / "test_development.csv").exists()
+              else pd.DataFrame())
+    return df, meta, dev, curves, stages
 
 
 @st.cache_data(show_spinner="Analyses statistiques…")
@@ -128,7 +130,7 @@ with tab_res:
                               + DESCRIPTIONS.get(n, n))
         folder = base / choice
         mtime = (folder / "subjects.csv").stat().st_mtime
-        df, meta, dev, curves = load(str(folder), mtime)
+        df, meta, dev, curves, stages = load(str(folder), mtime)
         R = analyze(str(folder), mtime)
         order, design = R["order"], R["design"]
         colors = colors_for(design, order)
@@ -195,6 +197,43 @@ with tab_res:
                               hovermode="x unified", margin=dict(l=10, r=10, t=10, b=10))
             st.plotly_chart(fig, width="stretch")
 
+        if not stages.empty:
+            st.subheader("Le cerveau pendant la batterie de tests")
+            frozen = bool(meta.get("tests", {}).get("freeze_structure"))
+            st.caption("Architecture figée pendant les tests (plan de contrôle) : les courbes doivent rester "
+                       "plates." if frozen else
+                       "La plasticité reste active pendant les tests : le cerveau continue de changer et les "
+                       "groupes se rapprochent au fil des tests.")
+            svars = [c for c in ("n_synapses", "coverage_objects", "n_neurons", "pattern_separation")
+                     if c in stages]
+            sv = st.selectbox("Mesure pendant les tests", svars, format_func=lambda c: S.label("brain_" + c))
+            names = stages.drop_duplicates("stage").sort_values("stage")
+            ticks = ["avant les tests"] + [f"après : {x}" for x in names.stage_label.tolist()[1:]]
+            fig = go.Figure()
+            for g in order:
+                agg = stages[stages.group == g].groupby("stage")[sv].agg(["mean", "sem"]).reset_index()
+                fig.add_trace(go.Scatter(x=[ticks[k] for k in agg.stage], y=agg["mean"], name=g,
+                                         mode="lines+markers", line=dict(color=colors[g], width=2),
+                                         marker=dict(size=8),
+                                         error_y=dict(type="data", array=1.96 * agg["sem"], visible=True,
+                                                      thickness=1, width=0)))
+            fig.update_layout(yaxis_title=S.label("brain_" + sv), height=380, hovermode="x unified",
+                              margin=dict(l=10, r=10, t=10, b=10))
+            st.plotly_chart(fig, width="stretch")
+
+        vs = R.get("vs_main")
+        if vs is not None and not vs.empty:
+            st.subheader("Comparaison avec le protocole principal (analyse exploratoire)")
+            st.caption("Mêmes sujets, même élevage : seul change le protocole de test (architecture figée ou "
+                       "plastique). Élevage identique vérifié : " + ("oui." if R.get("same_rearing") else "NON."))
+            show_vs = vs[["label", "eta2_base", "eta2_other", "apa_protocol", "inter_apa", "inter_p_holm"]].copy()
+            show_vs["inter_p_holm"] = show_vs["inter_p_holm"].map(
+                lambda p: S.fmt_p(p).replace("p = ", "").replace("p ", ""))
+            st.dataframe(show_vs.round(3).rename(columns={
+                "label": "Variable", "eta2_base": "η² groupe (plastique)", "eta2_other": "η² groupe (figé)",
+                "apa_protocol": "Effet du protocole", "inter_apa": "Interaction groupe × protocole",
+                "inter_p_holm": "p interaction (Holm)"}), hide_index=True, width="stretch")
+
         if not curves.empty:
             st.subheader("Courbes d'apprentissage")
             task = st.radio("Tâche", ["maze", "reversal"], horizontal=True,
@@ -225,16 +264,24 @@ with tab_brain:
     if not files:
         st.info("Aucun cerveau enregistré (les 2 premiers sujets de chaque groupe sont sauvegardés).")
     else:
-        st.header("Connectivité des cerveaux en fin d'élevage")
+        st.header("Connectivité des cerveaux")
         st.caption("Chaque ligne est un neurone cortical, chaque colonne une entrée sensorielle ; "
-                   "un point coloré est une synapse. Comparer un sujet IC et un sujet EC : même cerveau à la "
-                   "naissance (plan apparié), environnement différent.")
+                   "un point coloré est une synapse. Deux états sont enregistrés pour les 2 premiers sujets de "
+                   "chaque groupe : en fin d'élevage et après la batterie de tests. Comparer un sujet IC et un "
+                   "sujet EC en fin d'élevage : même cerveau à la naissance (plan apparié), environnement "
+                   "différent.")
         cfg = BrainConfig()
         mods = modality_slices(cfg)
         order_in = np.concatenate([mods[k] for k in ("walls", "food", "social", "objects", "place")])
         bounds = np.cumsum([len(mods[k]) for k in ("walls", "food", "social", "objects", "place")])
-        labels = [f.parent.parent.name + " / " + f.stem for f in files]
-        default = [lab for lab in labels if lab.endswith(("IC_s0", "EC_s0"))][:2] or labels[:2]
+        def brain_label(f: Path) -> str:
+            after = f.stem.endswith("_apres_tests")
+            name = f.stem.removesuffix("_apres_tests")
+            return f"{f.parent.parent.name} / {name} — {'après les tests' if after else 'fin d’élevage'}"
+
+        labels = [brain_label(f) for f in files]
+        default = [lab for lab in labels if lab in ("main / IC_s0 — fin d’élevage",
+                                                      "main / EC_s0 — fin d’élevage")] or labels[:2]
         pick = st.multiselect("Sujets", labels, default=default, max_selections=3)
         cols = st.columns(max(1, len(pick)))
         for c, lab in zip(cols, pick):
