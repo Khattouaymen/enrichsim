@@ -149,6 +149,9 @@ class TestConfig:
     maze_max_steps: int = 200
     maze_problems: tuple[int, ...] = (0, 1, 2, 3)
     reversal_trials: int = 8
+    # La plasticité reste active pendant les tests (protocole principal). True : l'architecture
+    # du cerveau (synapses, neurones) est figée pendant les tests (expérience de contrôle).
+    freeze_structure: bool = False
 
     def to_dict(self) -> dict[str, Any]:
         return asdict(self)

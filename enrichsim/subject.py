@@ -6,7 +6,7 @@ from dataclasses import dataclass, field
 import numpy as np
 
 from .brain import OBJ_SCALE, PlasticBrain
-from .config import BrainConfig, EnvConfig, Phase
+from .config import BrainConfig, Phase
 from .environment import N_ACTIONS, GridWorld, HomeCage, obs_dim
 from .metrics import brain_metrics
 

@@ -8,14 +8,21 @@
 4. Apprentissage inversé (reversal)          -> flexibilité cognitive, persévération
 
 Tous les tests se déroulent dans des arènes que AUCUN groupe n'a vues pendant l'élevage.
+
+Le cerveau continue d'apprendre pendant les tests. Dans le protocole principal, sa
+structure continue aussi de changer (synapses, neurones) ; `TestConfig.freeze_structure`
+la fige (expérience de contrôle). L'état du cerveau est mesuré après chaque test.
 """
 from __future__ import annotations
+
+from typing import Callable
 
 import numpy as np
 
 from .config import TestConfig
 from .environment import (MAZES, NOVEL_OBJECT_BASE, REVERSAL_GOAL, Maze, ObjectArena,
                           OpenField)
+from .metrics import brain_metrics
 from .subject import Subject
 
 
@@ -118,12 +125,15 @@ def _maze_trials(subject: Subject, maze: Maze, n_trials: int, max_steps: int,
     return trials
 
 
-def hebb_williams(subject: Subject, cfg: TestConfig) -> tuple[dict, list[dict]]:
+def hebb_williams(subject: Subject, cfg: TestConfig,
+                  after_maze: Callable[[], None] | None = None) -> tuple[dict, list[dict]]:
     curves: list[dict] = []
     for prob in cfg.maze_problems:
         maze = Maze(prob, subject.brain.cfg, subject.rng)
         for tr in _maze_trials(subject, maze, cfg.maze_trials, cfg.maze_max_steps):
             curves.append({"task": "maze", "problem": prob, **tr})
+    if after_maze is not None:
+        after_maze()
 
     # apprentissage inversé sur le premier problème : le but change de place
     prob = cfg.maze_problems[0]
@@ -163,14 +173,37 @@ def hebb_williams(subject: Subject, cfg: TestConfig) -> tuple[dict, list[dict]]:
 MAZE_CRITERION = 2  # critère d'apprentissage : essai réussi avec au plus 2 erreurs
 
 
-def test_battery(subject: Subject, cfg: TestConfig) -> tuple[dict, list[dict]]:
-    """Ordre fixe (du moins au plus stressant), comme dans les protocoles animaux."""
+TEST_STAGES = ["fin d'élevage", "champ ouvert", "objet nouveau", "Hebb-Williams", "inversion"]
+
+
+def test_battery(subject: Subject, cfg: TestConfig) -> tuple[dict, list[dict], list[dict]]:
+    """Ordre fixe (du moins au plus stressant), comme dans les protocoles animaux.
+
+    Retourne les scores, les courbes d'apprentissage et l'état du cerveau avant la batterie
+    puis après chaque test (`stages`). La mesure ne modifie ni le cerveau ni le hasard.
+    """
+    brain = subject.brain
+    stages: list[dict] = []
+
+    def snap() -> None:
+        k = len(stages)
+        stages.append({"stage": k, "stage_label": TEST_STAGES[k], **brain_metrics(brain)})
+
     res: dict = {}
-    res.update(open_field(subject, cfg))
-    res.update(novel_object_recognition(subject, cfg))
-    maze_summary, curves = hebb_williams(subject, cfg)
+    snap()
+    brain.structure_frozen = cfg.freeze_structure
+    try:
+        res.update(open_field(subject, cfg))
+        snap()
+        res.update(novel_object_recognition(subject, cfg))
+        snap()
+        maze_summary, curves = hebb_williams(subject, cfg, after_maze=snap)
+        snap()
+    finally:
+        brain.structure_frozen = False
     res.update(maze_summary)
-    return res, curves
+    return res, curves, stages
 
 
-__all__ = ["test_battery", "open_field", "novel_object_recognition", "hebb_williams", "MAZES"]
+__all__ = ["test_battery", "open_field", "novel_object_recognition", "hebb_williams", "MAZES",
+           "TEST_STAGES"]

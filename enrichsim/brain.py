@@ -31,6 +31,10 @@ Plasticité structurelle (toutes les `structural_period` étapes) :
 Les neurones ont un taux de décharge saturant : h = tanh(max(z, 0)).
 
 Une période critique optionnelle fait décroître toute la plasticité avec l'âge.
+
+`structure_frozen` (expérience de contrôle) fige l'architecture : plus aucune synapse ni
+aucun neurone n'apparaît ou ne disparaît. L'apprentissage des poids, l'oubli passif et
+l'homéostasie continuent.
 """
 from __future__ import annotations
 
@@ -88,6 +92,7 @@ class PlasticBrain:
         self.deaths = 0
         self.synapses_formed = 0
         self.synapses_pruned = 0
+        self.structure_frozen = False  # architecture figée (expérience de contrôle)
 
     # ------------------------------------------------------------------ utilitaires
     def _reset_traces(self) -> None:
@@ -305,30 +310,32 @@ class PlasticBrain:
         # une entrée est « utilisée » si le neurone présynaptique décharge assez souvent
         pre_use = np.minimum(self.pre / cfg.pre_threshold, 1.0)          # (D,)
         used = pre_use >= 1.0
+        remodel = not self.structure_frozen
 
-        # 1) élagage « use it or lose it » : les synapses faibles disparaissent, très
-        #    probablement si leur entrée est silencieuse, rarement sinon (compétition)
-        weak = self.M & (np.abs(self.W1) < cfg.prune_threshold)
-        prob_prune = np.where(used, cfg.prune_prob_used, cfg.prune_prob)[None, :] * p
-        prune = weak & (rng.random(self.M.shape) < prob_prune)
-        self.M &= ~prune
-        self.synapses_pruned += int(prune.sum())
+        if remodel:
+            # 1) élagage « use it or lose it » : les synapses faibles disparaissent, très
+            #    probablement si leur entrée est silencieuse, rarement sinon (compétition)
+            weak = self.M & (np.abs(self.W1) < cfg.prune_threshold)
+            prob_prune = np.where(used, cfg.prune_prob_used, cfg.prune_prob)[None, :] * p
+            prune = weak & (rng.random(self.M.shape) < prob_prune)
+            self.M &= ~prune
+            self.synapses_pruned += int(prune.sum())
 
-        # 2) synaptogenèse dépendante de l'activité pré- ET postsynaptique
-        post_use = np.minimum(self.post / cfg.target_rate, 1.0)          # (H,)
-        prob_grow = cfg.grow_rate * p * np.outer(post_use, pre_use)
-        grow = ~self.M & alive_rows & (rng.random(self.M.shape) < prob_grow)
-        self.M |= grow
-        self.W1[grow] = rng.normal(0.03, 0.02, int(grow.sum())).astype(F32)
-        self.synapses_formed += int(grow.sum())
+            # 2) synaptogenèse dépendante de l'activité pré- ET postsynaptique
+            post_use = np.minimum(self.post / cfg.target_rate, 1.0)          # (H,)
+            prob_grow = cfg.grow_rate * p * np.outer(post_use, pre_use)
+            grow = ~self.M & alive_rows & (rng.random(self.M.shape) < prob_grow)
+            self.M |= grow
+            self.W1[grow] = rng.normal(0.03, 0.02, int(grow.sum())).astype(F32)
+            self.synapses_formed += int(grow.sum())
 
-        # 3) capacité dendritique : on retire les synapses les plus faibles en excès
-        fan_in = self.M.sum(1)
-        for i in np.where(fan_in > cfg.max_fan_in)[0]:
-            idx = np.where(self.M[i])[0]
-            drop = idx[np.argsort(np.abs(self.W1[i, idx]))[: fan_in[i] - cfg.max_fan_in]]
-            self.M[i, drop] = False
-            self.synapses_pruned += len(drop)
+            # 3) capacité dendritique : on retire les synapses les plus faibles en excès
+            fan_in = self.M.sum(1)
+            for i in np.where(fan_in > cfg.max_fan_in)[0]:
+                idx = np.where(self.M[i])[0]
+                drop = idx[np.argsort(np.abs(self.W1[i, idx]))[: fan_in[i] - cfg.max_fan_in]]
+                self.M[i, drop] = False
+                self.synapses_pruned += len(drop)
 
         # 4) plasticité homéostatique : ramène l'activité moyenne vers la consigne
         alive_idx = np.where(self.alive)[0]
@@ -336,20 +343,21 @@ class PlasticBrain:
         scale = np.clip(ratio ** 0.5, 1.0 - cfg.homeostasis, 1.0 + cfg.homeostasis)
         self.W1[alive_idx] *= scale[:, None]
 
-        # 5) apoptose des neurones silencieux (après une période de grâce)
-        silent = self.alive & (self.post < cfg.silent_threshold) & (self.age - self.birth > 2000)
-        for i in np.where(silent)[0]:
-            if self.alive.sum() <= cfg.min_neurons:
-                break
-            self._kill(i)
+        if remodel:
+            # 5) apoptose des neurones silencieux (après une période de grâce)
+            silent = self.alive & (self.post < cfg.silent_threshold) & (self.age - self.birth > 2000)
+            for i in np.where(silent)[0]:
+                if self.alive.sum() <= cfg.min_neurons:
+                    break
+                self._kill(i)
 
-        # 6) neurogenèse déclenchée par la nouveauté
-        novelty = self.pe_ema / PE_SCALE
-        if novelty > cfg.novelty_threshold:
-            prob = cfg.neurogenesis_rate * p * np.tanh(novelty - cfg.novelty_threshold)
-            dormant = np.where(~self.alive)[0]
-            if len(dormant) and rng.random() < prob:
-                self._birth(int(dormant[0]))
+            # 6) neurogenèse déclenchée par la nouveauté
+            novelty = self.pe_ema / PE_SCALE
+            if novelty > cfg.novelty_threshold:
+                prob = cfg.neurogenesis_rate * p * np.tanh(novelty - cfg.novelty_threshold)
+                dormant = np.where(~self.alive)[0]
+                if len(dormant) and rng.random() < prob:
+                    self._birth(int(dormant[0]))
 
         self.W1 *= self.M
 
@@ -387,5 +395,7 @@ class PlasticBrain:
 
     # ------------------------------------------------------------------ sauvegarde
     def state(self) -> dict[str, np.ndarray]:
-        return {"W1": self.W1, "M": self.M, "alive": self.alive, "Wp": self.Wp,
-                "wv": self.wv, "pre": self.pre, "post": self.post}
+        """Copie de l'état du cerveau (les tableaux ne suivent pas les changements ultérieurs)."""
+        return {k: np.array(v, copy=True) for k, v in
+                (("W1", self.W1), ("M", self.M), ("alive", self.alive), ("Wp", self.Wp),
+                 ("wv", self.wv), ("pre", self.pre), ("post", self.post))}
