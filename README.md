@@ -46,6 +46,7 @@ python -m pytest
 | `enrichsim/stats.py` | plan d'analyse statistique (fixé avant l'expérience finale) et analyses exploratoires ajoutées ensuite |
 | `enrichsim/report.py` | rapport HTML en français, résultats au format APA |
 | `app/dashboard.py` | tableau de bord Streamlit |
+| `scripts/nor_mecanisme.py` | vérification exploratoire du test de l'objet nouveau (16 sujets rejoués) |
 | `docs/methodologie.md` | méthodologie, hypothèses, phase de calibrage, limites, références |
 | `tests/` | tests pytest |
 

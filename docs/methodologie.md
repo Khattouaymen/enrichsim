@@ -205,9 +205,16 @@ l'homéostasie continuent.
   (avec deux protocoles mesurés sur les mêmes sujets, c'est le test de l'interaction), test
   choisi comme en section 5, *p* corrigés de Holm.
 
+**Vérification du test de l'objet nouveau** (`scripts/nor_mecanisme.py`). Le script rejoue
+l'élevage et les deux premiers tests de 8 sujets IC et 8 sujets EC de l'expérience 1 (mêmes
+graines, donc mêmes sujets ; il vérifie que les indices de discrimination recalculés sont
+identiques à ceux de `results/main/subjects.csv`). À chaque contact avec un objet pendant la
+phase de test, il enregistre la nouveauté perçue, le bonus d'investigation qui en découle et
+s'il atteint son plafond. Résultats dans `results/main/exploratoire_nor/`.
+
 Ces analyses ont été décidées **après** avoir vu les résultats de l'expérience finale : elles
-sont exploratoires et doivent être présentées comme telles. Le code d'analyse a été écrit et
-commité avant de disposer des résultats de l'expérience de contrôle.
+sont exploratoires et doivent être présentées comme telles. Le code d'analyse de l'expérience
+de contrôle a été écrit et commité avant de disposer de ses résultats.
 
 ## 7. Phase de calibrage exploratoire — à déclarer
 

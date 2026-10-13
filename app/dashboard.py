@@ -33,6 +33,8 @@ CELL_COLORS = ["#f4f3ef", "#52514e", "#1baf7a", "#eda100", "#6250d6", "#e34948"]
 CELL_NAMES = ["vide", "mur", "nourriture", "objet", "congénère", "sujet"]
 
 st.set_page_config(page_title="EnrichSim", page_icon="🧠", layout="wide")
+# légende au-dessus du graphique : ne passe pas sous la barre d'outils de Plotly
+LEGEND_TOP = dict(orientation="h", yanchor="bottom", y=1.02, xanchor="left", x=0)
 
 
 def colors_for(design: str, order: list[str]) -> dict[str, str]:
@@ -194,7 +196,7 @@ with tab_res:
                                          error_y=dict(type="data", array=1.96 * agg["sem"], visible=True,
                                                       thickness=1, width=0)))
             fig.update_layout(xaxis_title="Âge (étapes)", yaxis_title=S.label("brain_" + dv), height=400,
-                              hovermode="x unified", margin=dict(l=10, r=10, t=10, b=10))
+                              hovermode="x unified", legend=LEGEND_TOP, margin=dict(l=10, r=10, t=10, b=10))
             st.plotly_chart(fig, width="stretch")
 
         if not stages.empty:
@@ -217,7 +219,7 @@ with tab_res:
                                          marker=dict(size=8),
                                          error_y=dict(type="data", array=1.96 * agg["sem"], visible=True,
                                                       thickness=1, width=0)))
-            fig.update_layout(yaxis_title=S.label("brain_" + sv), height=380, hovermode="x unified",
+            fig.update_layout(yaxis_title=S.label("brain_" + sv), height=380, hovermode="x unified", legend=LEGEND_TOP,
                               margin=dict(l=10, r=10, t=10, b=10))
             st.plotly_chart(fig, width="stretch")
 
@@ -244,7 +246,7 @@ with tab_res:
                 agg = cv[cv.group == g].groupby("trial")["errors"].agg(["mean", "sem"]).reset_index()
                 fig.add_trace(go.Scatter(x=agg.trial, y=agg["mean"], name=g, mode="lines+markers",
                                          line=dict(color=colors[g], width=2), marker=dict(size=8)))
-            fig.update_layout(xaxis_title="Essai", yaxis_title="Erreurs", height=380, hovermode="x unified",
+            fig.update_layout(xaxis_title="Essai", yaxis_title="Erreurs", height=380, hovermode="x unified", legend=LEGEND_TOP,
                               margin=dict(l=10, r=10, t=10, b=10))
             st.plotly_chart(fig, width="stretch")
             m = R["mixed"].get(task, {})
