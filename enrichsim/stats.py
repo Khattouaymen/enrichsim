@@ -498,7 +498,12 @@ def analyze_ablation(df: pd.DataFrame, variables: list[str], control: str = "EC"
             continue
         with warnings.catch_warnings():
             warnings.simplefilter("ignore")
-            res = stats.dunnett(*others, control=ctrl)
+            # les p de Dunnett sont calculés par intégration quasi-Monte-Carlo : générateur
+            # fixé pour que l'analyse donne exactement les mêmes valeurs à chaque exécution
+            try:
+                res = stats.dunnett(*others, control=ctrl, rng=np.random.default_rng(0))
+            except TypeError:  # SciPy < 1.15
+                res = stats.dunnett(*others, control=ctrl, random_state=np.random.default_rng(0))
         full = ctrl.mean() - _clean(df.loc[df.group == floor, v]).mean()
         for g, o, p, st in zip(groups, others, res.pvalue, res.statistic):
             rows.append({
