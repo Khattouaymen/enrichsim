@@ -4,11 +4,19 @@
 
 Onglets : environnements (cages et labyrinthes), résultats (graphiques interactifs et
 statistiques), cerveaux (connectivité des sujets enregistrés), lancement d'une expérience.
+
+Par défaut, le tableau de bord tourne en mode « public » (hébergement en ligne) : dossier
+de résultats fixe et petites simulations seulement. Pour l'accès complet sur son PC :
+
+    $env:ENRICHSIM_MODE = "local"      # PowerShell
+    streamlit run app/dashboard.py
 """
 from __future__ import annotations
 
 import json
+import os
 import sys
+import tempfile
 from pathlib import Path
 
 import numpy as np
@@ -31,6 +39,11 @@ SEQ = ["#86b6ef", "#5598e7", "#2a78d6", "#1c5cab", "#104281"]
 # 0 vide, 1 mur, 2 nourriture, 3 objet, 4 congénère, 5 sujet
 CELL_COLORS = ["#f4f3ef", "#52514e", "#1baf7a", "#eda100", "#6250d6", "#e34948"]
 CELL_NAMES = ["vide", "mur", "nourriture", "objet", "congénère", "sujet"]
+
+# mode public : aucun chemin saisi par le visiteur, simulations limitées (serveur partagé)
+PUBLIC = os.environ.get("ENRICHSIM_MODE", "public").lower() != "local"
+PUBLIC_MAX_SUBJECTS = 4
+PUBLIC_MAX_STEPS = 4000
 
 st.set_page_config(page_title="EnrichSim", page_icon="🧠", layout="wide")
 # légende au-dessus du graphique : ne passe pas sous la barre d'outils de Plotly
@@ -88,7 +101,11 @@ def analyze(folder: str, mtime: float):
 # =========================================================================== barre latérale
 st.sidebar.title("🧠 EnrichSim")
 st.sidebar.caption("Enrichissement environnemental et développement d'un cerveau artificiel")
-base = Path(st.sidebar.text_input("Dossier des résultats", str(ROOT / "results")))
+if PUBLIC:
+    base = ROOT / "results"
+    st.sidebar.caption("Résultats de l'expérience finale du mémoire (20 sujets par groupe, graine 2027).")
+else:
+    base = Path(st.sidebar.text_input("Dossier des résultats", str(ROOT / "results")))
 experiments = list_experiments(base)
 
 tab_env, tab_res, tab_brain, tab_run = st.tabs(
@@ -313,24 +330,36 @@ with tab_run:
     st.header("Lancer une expérience")
     st.caption("Pour une démonstration en direct, garder un petit effectif (3 sujets, 3 000 étapes : "
                "environ une minute). L'expérience du mémoire : 20 sujets, 20 000 étapes, graine 2027.")
+    if PUBLIC:
+        st.info(f"Version en ligne : simulations limitées à {PUBLIC_MAX_SUBJECTS} sujets par groupe et "
+                f"{PUBLIC_MAX_STEPS:,} étapes d'élevage. Les résultats complets du mémoire sont dans "
+                "l'onglet « Résultats ».".replace(",", " "))
+    max_n, max_steps = (PUBLIC_MAX_SUBJECTS, PUBLIC_MAX_STEPS) if PUBLIC else (100, 100_000)
     c1, c2, c3, c4 = st.columns(4)
     design = c1.selectbox("Plan", list(DESIGNS), format_func=lambda d: f"{d} — {DESCRIPTIONS[d]}")
-    n = c2.number_input("Sujets par groupe", 2, 100, 3)
-    steps = c3.number_input("Durée de l'élevage (étapes)", 500, 100_000, 3000, step=500)
+    n = c2.number_input("Sujets par groupe", 2, max_n, 3)
+    steps = c3.number_input("Durée de l'élevage (étapes)", 500, max_steps, 3000, step=500)
     seed = c4.number_input("Graine", 0, 100_000, 2027)
-    out = st.text_input("Dossier de sortie", str(ROOT / "demo" / design))
+    if PUBLIC:
+        out = None  # dossier temporaire créé au lancement, jamais choisi par le visiteur
+        workers = min(2, os.cpu_count() or 1)
+    else:
+        out = st.text_input("Dossier de sortie", str(ROOT / "demo" / design))
+        workers = None
     if st.button("Lancer", type="primary"):
+        if out is None:
+            out = tempfile.mkdtemp(prefix=f"enrichsim_{design}_")
         bar = st.progress(0.0, text="Initialisation…")
 
         def progress(done, total, group):
             bar.progress(done / total, text=f"{done}/{total} sujets — dernier terminé : {group}")
 
         folder = run_experiment(design, n_subjects=int(n), steps=int(steps), out_dir=out, seed=int(seed),
-                                progress=progress)
+                                workers=workers, progress=progress)
         bar.progress(1.0, text="Analyse et rapport…")
         from enrichsim.report import build_report
         path = build_report(folder)
-        st.success(f"Terminé : {folder}. Rapport : {path}")
+        st.success("Terminé." if PUBLIC else f"Terminé : {folder}. Rapport : {path}")
         st.download_button("Télécharger le rapport", path.read_bytes(), file_name=f"rapport_{design}.html",
                            mime="text/html")
         components.html(path.read_text(encoding="utf-8"), height=900, scrolling=True)
