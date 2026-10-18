@@ -1,9 +1,10 @@
-# versions testées (Python 3.11), figées pour que l'hébergement installe exactement les mêmes
-numpy==2.2.3
-scipy==1.15.2
+# versions testées ensemble, figées pour que l'hébergement installe exactement les mêmes ;
+# toutes existent en paquets précompilés pour Python 3.11 à 3.14 (pas de compilation)
+numpy==2.5.3
+scipy==1.18.1
 pandas==3.0.5
 matplotlib==3.11.2
 statsmodels==0.15.0
-streamlit==1.63.0
-plotly==7.0.0
+streamlit==1.65.0
+plotly==7.1.0
 pytest==9.1.1
